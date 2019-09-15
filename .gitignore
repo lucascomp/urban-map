@@ -1,0 +1,11 @@
+# Dependency directory
+node_modules
+
+# next.js build output
+build
+
+# Optional eslint cache
+.eslintcache
+
+# Logs
+yarn-error.log

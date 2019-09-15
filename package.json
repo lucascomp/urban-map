@@ -1,0 +1,36 @@
+{
+  "name": "urban-map-site",
+  "version": "0.0.0",
+  "description": "Site do Mapa de Acessibilidade Urbana",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js",
+    "build": "next build src",
+    "lint": "eslint --cache 'src/**'"
+  },
+  "author": "Lucas Alves de Sousa <lucas_comp@outlook.com>",
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/lucascomp/urban-map-site#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucascomp/urban-map-site.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lucascomp/urban-map-site/issues"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "next": "^9.0.5",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  },
+  "devDependencies": {
+    "eslint": "6.1.0",
+    "eslint-config-airbnb": "18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0"
+  }
+}
