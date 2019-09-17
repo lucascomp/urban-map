@@ -1,0 +1,12 @@
+.Button {
+  font-family: var(--font-family);
+  background: var(--color-facebook);
+  border-color: var(--color-facebook);
+}
+
+.Button img {
+  margin-top: -3px;
+  margin-right: 4px;
+  vertical-align: middle;
+  font-size: 120%;
+}
