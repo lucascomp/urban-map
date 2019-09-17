@@ -1,12 +1,33 @@
+:root {
+  --font-family: Montserrat, Helvetica, Arial, sans-serif;
+  --color-primary: rgb(5, 150, 0);
+  --color-text: #333641;
+  --color-default: #adadad;
+  --color-facebook: #3b5998;
+  --color-white: white;
+  --color-black: black;
+  --font-size: 14px;
+  --border-radius: 5px;
+  --size-height: 40px;
+
+  --color-brand: '#143a7c';
+}
+
 * {
   margin: 0;
   padding: 0;
 }
 
 body {
-  font-family: Montserrat, Helvetica, Arial, sans-serif;
+  font-family: var(--font-family);
+  color: var(--color-text);
 }
 
 a {
   text-decoration: none;
+  color: var(--color-primary);
+}
+
+p {
+  line-height: 1.4;
 }
