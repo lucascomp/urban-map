@@ -1,0 +1,13 @@
+.Panel {
+  padding: 30px 60px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 0 #e0e0e0;
+}
+
+@media (max-width: 500px) {
+  .Panel {
+    width: 100%;
+    box-shadow: none;
+    padding: 0;
+  }
+}
