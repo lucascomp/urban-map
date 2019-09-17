@@ -1,0 +1,16 @@
+.Title {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.SocialLoginWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -6px -7.5px;
+}
+
+.FacebookButton,
+.GoogleButton {
+  flex: 1;
+  margin: 6px 7.5px;
+}
