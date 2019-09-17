@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/server.js",
     "build": "next build src",
-    "lint": "eslint --cache 'src/**'"
+    "lint": "eslint --cache 'src/**/*.{js,jsx}'"
   },
   "author": "Lucas Alves de Sousa <lucas_comp@outlook.com>",
   "license": "UNLICENSED",
@@ -20,8 +20,12 @@
     "url": "https://github.com/lucascomp/urban-map-site/issues"
   },
   "dependencies": {
+    "@zeit/next-css": "^1.0.1",
+    "classnames": "^2.2.6",
     "express": "^4.17.1",
     "next": "^9.0.5",
+    "next-images": "^1.2.0",
+    "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
   },
