@@ -1,0 +1,12 @@
+.Email,
+.Password {
+  margin-bottom: 12px;
+}
+
+.ForgotPasswordLink {
+  font-size: 12px;
+}
+
+.SubmitButton {
+  margin: 15px 0;
+}
