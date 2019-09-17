@@ -1,0 +1,30 @@
+.Divison {
+  overflow: hidden;
+  display: table;
+  width: 100%;
+  margin: 15px 0;
+  color: #9b9b9b;
+  font-family: var(--font-family);
+  font-size: 16px;
+  white-space: nowrap;
+  text-align: center;
+  line-height: 1;
+}
+
+.Divison::before,
+.Divison::after {
+  content: '';
+  display: table-cell;
+  position: relative;
+  top: 0.5em;
+  width: 45%;
+  border-top: 1px solid #9b9b9b;
+}
+
+.Divison::before {
+  right: 10px;
+}
+
+.Divison::after {
+  left: 10px;
+}

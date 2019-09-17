@@ -1,0 +1,20 @@
+.Title {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.FacebookLoginButton {
+  margin-bottom: 10px;
+}
+
+.SignUpLink {
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+.SignUpLink b {
+  font-weight: 100;
+  color: var(--color-primary);
+}
