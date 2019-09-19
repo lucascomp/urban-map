@@ -1,0 +1,42 @@
+.Wrapper {
+  position: absolute;
+  top: 0;
+  background-color: white;
+  margin: 8px 0 8px 8px;
+  border-radius: 8px 8px 0 0;
+  border-bottom: 1px solid #DADCE0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 -1px 0px rgba(0,0,0,0.02);
+}
+
+.Container {
+  display: flex;
+  align-items: center;
+  width: 450px;
+}
+
+@media (max-width: 500px) {
+  .Wrapper {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  .Container {
+    margin: 8px;
+    border: 1px solid rgba(0,0,0,.12);
+    border-radius: 8px;
+    width: initial;
+  }
+}
+
+.MenuButton,
+.SearchButton {
+  padding: 12px 10px 8px 10px;
+  outline: none;
+}
+
+.Query {
+  border: none;
+  flex: 1;
+}

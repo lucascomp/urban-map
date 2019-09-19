@@ -33,7 +33,7 @@ const LoginForm = () => {
       <Link href="/forgot-password">
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <a className={styles.ForgotPasswordLink}>
-        Esqueceu sua senha?
+          Esqueceu sua senha?
         </a>
       </Link>
       <Button

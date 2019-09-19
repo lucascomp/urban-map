@@ -25,9 +25,17 @@ body {
 
 a {
   text-decoration: none;
-  color: var(--color-primary);
+  color: var(--color-text);
 }
 
 p {
   line-height: 1.4;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: var(--font-family);
+  outline: 0;
 }

@@ -804,6 +804,25 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@react-google-maps/api@^1.7.5":
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/@react-google-maps/api/-/api-1.7.5.tgz#012aadd23213470181ee4f344dbf87d525bed536"
+  integrity sha512-yXo0pXIIGHhWkrpuyH1XxyFBEl76TQDQk7VPbF0Vhbo1bR/kmYvcujv5G7LAc3M5p/whd4Z9zPGe1w0XV2k2CQ==
+  dependencies:
+    "@react-google-maps/infobox" "1.7.0"
+    "@react-google-maps/marker-clusterer" "1.7.0"
+    invariant "2.2.4"
+
+"@react-google-maps/infobox@1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@react-google-maps/infobox/-/infobox-1.7.0.tgz#b904737fe48670accfa456502e11c0729c6abf25"
+  integrity sha512-cfrRpSS5/fb0ZNtqbYBc/BL6cJoCpuHOdvsrusROl+sDTQ/0NyiDxB44U/hQlWqbpfS6nA4q9yoPCi2ICEJl4g==
+
+"@react-google-maps/marker-clusterer@1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@react-google-maps/marker-clusterer/-/marker-clusterer-1.7.0.tgz#eb47d118ea1b1a96617418c07400ae7435bbe57b"
+  integrity sha512-g8lp2pFlDgVyHEUH4QyNv+VFqY7uARMnuyA+Sn7QG4MT8ehdRK/kVfhmZkbyXDOt6yfzW4GtQFezOQRESQAxlA==
+
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"
@@ -3055,7 +3074,7 @@ inquirer@^6.4.1:
     strip-ansi "^5.1.0"
     through "^2.3.6"
 
-invariant@^2.2.2:
+invariant@2.2.4, invariant@^2.2.2:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==

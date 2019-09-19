@@ -1,6 +1,6 @@
 import React from 'react';
-import ForgotPasswordForm from '../ForgotPasswordForm';
 import Panel from '../Panel';
+import ForgotPasswordForm from '../ForgotPasswordForm';
 import styles from './ForgotPasswordPanel.css';
 
 const ForgotPasswordPanel = () => (

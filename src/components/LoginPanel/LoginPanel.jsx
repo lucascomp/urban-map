@@ -1,10 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 import Divison from '../Divison';
+import Panel from '../Panel';
 import FacebookLoginButton from '../FacebookLoginButton';
 import GoogleLoginButton from '../GoogleLoginButton';
 import LoginForm from '../LoginForm';
-import Panel from '../Panel';
 import redirect from '../../utils/router';
 import styles from './LoginPanel.css';
 
