@@ -2,7 +2,7 @@
 node_modules
 
 # next.js build output
-build
+.next
 
 # Optional eslint cache
 .eslintcache
