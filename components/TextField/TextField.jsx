@@ -11,10 +11,18 @@ const TextField = ({
   value,
   handleChange,
   className,
+  disabled,
 }) => {
   const wrapperClassName = classNames(
     styles.Wrapper,
     className,
+  );
+
+  const inputClassName = classNames(
+    styles.Input,
+    {
+      [styles.disabled]: disabled,
+    },
   );
 
   return (
@@ -26,7 +34,8 @@ const TextField = ({
         placeholder={placeholder}
         value={value}
         onChange={handleChange}
-        className={styles.Input}
+        className={inputClassName}
+        disabled={disabled}
       />
     </div>
   );
@@ -40,12 +49,14 @@ TextField.propTypes = {
   value: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   className: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 TextField.defaultProps = {
   type: 'text',
   placeholder: null,
   className: null,
+  disabled: false,
 };
 
 export default TextField;

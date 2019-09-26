@@ -18,3 +18,8 @@
   font-family: inherit;
   outline: none;
 }
+
+.disabled {
+  cursor: not-allowed;
+  opacity: .5;
+}
