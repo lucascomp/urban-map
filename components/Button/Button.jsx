@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Spinner from '../Spinner';
 import styles from './Button.css';
 
 const Button = ({
@@ -10,10 +11,12 @@ const Button = ({
   fluid,
   onClick,
   type,
+  submitting,
 }) => {
   const className = classNames(
     styles.Button,
     {
+      [styles.disabled]: disabled,
       [styles.fluid]: fluid,
     },
     classNameProp,
@@ -27,7 +30,7 @@ const Button = ({
       className={className}
       onClick={onClick}
     >
-      {children}
+      {submitting ? <Spinner className={styles.Spinner} /> : children}
     </button>
   );
 };
@@ -39,6 +42,7 @@ Button.propTypes = {
   fluid: PropTypes.bool,
   onClick: PropTypes.func,
   type: PropTypes.oneOf(['button', 'reset', 'submit']),
+  submitting: PropTypes.bool,
 };
 
 Button.defaultProps = {
@@ -48,6 +52,7 @@ Button.defaultProps = {
   fluid: false,
   onClick: null,
   type: 'button',
+  submitting: false,
 };
 
 export default Button;
