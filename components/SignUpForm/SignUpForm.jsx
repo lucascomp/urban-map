@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Button from '../Button';
 import TextField from '../TextField';
@@ -6,10 +6,24 @@ import redirect from '../../utils/router';
 import styles from './SignUpForm.css';
 
 const SignUpForm = () => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+
   const onSubmit = (event) => {
     event.preventDefault();
+    setSubmitting(true);
     redirect('/');
   };
+
+  const onFirstNameChanged = ({ target: { value } }) => setFirstName(value);
+  const onLastNameChanged = ({ target: { value } }) => setLastName(value);
+  const onEmailChanged = ({ target: { value } }) => setEmail(value);
+  const onPasswordChanged = ({ target: { value } }) => setPassword(value);
+  const onConfirmPasswordChanged = ({ target: { value } }) => setConfirmPassword(value);
 
   return (
     <form onSubmit={onSubmit}>
@@ -18,26 +32,29 @@ const SignUpForm = () => {
           id="firstName"
           name="firstName"
           placeholder="Nome"
-          value=""
-          handleChange={() => {}}
+          value={firstName}
+          handleChange={onFirstNameChanged}
           className={styles.FirstName}
+          disabled={submitting}
         />
         <TextField
           id="lastName"
           name="lastName"
           placeholder="Sobrenome"
-          value=""
-          handleChange={() => {}}
+          value={lastName}
+          handleChange={onLastNameChanged}
           className={styles.LastName}
+          disabled={submitting}
         />
       </div>
       <TextField
         id="email"
         name="email"
         placeholder="E-mail"
-        value=""
-        handleChange={() => {}}
+        value={email}
+        handleChange={onEmailChanged}
         className={styles.Email}
+        disabled={submitting}
       />
       <div className={styles.PasswordWrapper}>
         <TextField
@@ -45,18 +62,20 @@ const SignUpForm = () => {
           name="password"
           type="password"
           placeholder="Senha"
-          value=""
-          handleChange={() => {}}
+          value={password}
+          handleChange={onPasswordChanged}
           className={styles.Password}
+          disabled={submitting}
         />
         <TextField
           id="confirmPassword"
           name="confirmPassword"
           type="password"
           placeholder="Confirme a senha"
-          value=""
-          handleChange={() => {}}
+          value={confirmPassword}
+          handleChange={onConfirmPasswordChanged}
           className={styles.ConfirmPassword}
+          disabled={submitting}
         />
       </div>
       <div className={styles.FormActions}>
@@ -73,6 +92,8 @@ const SignUpForm = () => {
             className={styles.SubmitButton}
             type="submit"
             fluid
+            disabled={submitting}
+            submitting={submitting}
           >
             Cadastre-se
           </Button>
