@@ -36,6 +36,8 @@ const TextField = ({
         onChange={handleChange}
         className={inputClassName}
         disabled={disabled}
+        spellCheck="false"
+        autoComplete="off"
       />
     </div>
   );
@@ -46,8 +48,8 @@ TextField.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['text', 'email', 'password', 'tel']),
   placeholder: PropTypes.string,
-  value: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  value: PropTypes.string,
+  handleChange: PropTypes.func,
   className: PropTypes.string,
   disabled: PropTypes.bool,
 };
@@ -57,6 +59,8 @@ TextField.defaultProps = {
   placeholder: null,
   className: null,
   disabled: false,
+  value: '',
+  handleChange: null,
 };
 
 export default TextField;

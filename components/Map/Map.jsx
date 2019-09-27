@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import MapComponents from '../MapComponents';
 
+/* global navigator */
+
 const Map = () => {
-  const onLoad = (map) => {
-    // eslint-disable-next-line no-undef
-    navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
-      map.panTo({ lat: latitude, lng: longitude });
-    });
-  };
+  const onLoad = useCallback(
+    (map) => {
+      navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
+        map.panTo({ lat: latitude, lng: longitude });
+      });
+    },
+  );
 
   const onClick = (event) => {
     if (!event.placeId) {
@@ -19,7 +22,7 @@ const Map = () => {
   };
 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyCbba3cKHWQtsY2nIlYMryfsPzRILaDmO8">
+    <LoadScript libraries={['places']} googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}>
       <GoogleMap
         mapContainerStyle={{ height: '100vh' }}
         zoom={15}

@@ -9,3 +9,6 @@ node_modules
 
 # Logs
 yarn-error.log
+
+# dotenv environment variables file
+.env
