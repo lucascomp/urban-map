@@ -22,7 +22,7 @@ const Sidebar = ({ showSidebar, onClose }) => {
       <div className={sideBar}>
         <div className={styles.Header}>
           <h3>Mapa de Acessibilidade Urbana</h3>
-          <button type="button" onClick={onClose}>
+          <button className={styles.Backward} type="button" onClick={onClose}>
             <img src={BackwardIcon} alt="backward-icon" />
           </button>
         </div>
