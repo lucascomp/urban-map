@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useGoogleMap } from '@react-google-maps/api';
 import PropTypes from 'prop-types';
-import TextField from '../TextField';
 import Spinner from '../Spinner';
+import TextField from '../TextField';
 import HamburgerIcon from './hamburger.svg';
 import SearchIcon from './search.svg';
 import styles from './SearchBox.css';
