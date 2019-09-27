@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Button from '../Button';
 import TextField from '../TextField';
+import * as userServices from '../../services/user';
 import redirect from '../../utils/router';
 import styles from './LoginForm.css';
 
@@ -10,10 +11,21 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     setSubmitting(true);
-    redirect('/');
+
+    try {
+      const res = await userServices.login({ email, password });
+      if (res.status >= 400) {
+        throw res;
+      }
+      redirect('/');
+    } catch (error) {
+      // TODO: mensagem de erro para o usuário
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const onEmailChanged = ({ target: { value } }) => setEmail(value);
