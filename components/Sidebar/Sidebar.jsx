@@ -1,16 +1,25 @@
 import React from 'react';
-import Link from 'next/link';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { signOut } from '../../services/auth';
 import BackwardIcon from './backward.svg';
 import styles from './Sidebar.css';
 
-const Sidebar = ({ showSidebar, onClose }) => {
+const Sidebar = ({ showSidebar, onClose, onLoggedOut }) => {
   const sideBar = classNames(
     styles.SideBar, {
       [styles.opened]: showSidebar,
     },
   );
+
+  const onLogoutClick = async () => {
+    try {
+      await signOut();
+      onLoggedOut();
+    } catch (error) {
+      console.log(error); // TODO: exibir mensagem de erro pro usuário
+    }
+  };
 
   return (
     <>
@@ -28,10 +37,7 @@ const Sidebar = ({ showSidebar, onClose }) => {
         </div>
         <ul className={styles.Widget}>
           <li className={styles.Item}>
-            <Link href="/login">
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a>Logout</a>
-            </Link>
+            <button onClick={onLogoutClick} type="button">Logout</button>
           </li>
         </ul>
       </div>
@@ -42,6 +48,7 @@ const Sidebar = ({ showSidebar, onClose }) => {
 Sidebar.propTypes = {
   showSidebar: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
+  onLoggedOut: PropTypes.func.isRequired,
 };
 
 Sidebar.defaultProps = {

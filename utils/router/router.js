@@ -1,6 +1,6 @@
 import Router from 'next/router';
 
-const redirect = (destination, res, status = 302) => {
+const redirect = (destination, { res } = {}, status = 302) => {
   if (res) {
     res.writeHead(status, { Location: destination });
     res.end();

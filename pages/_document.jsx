@@ -1,10 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Document, {
   Html,
   Head,
   Main,
   NextScript,
 } from 'next/document';
+
+// eslint-disable-next-line react/no-danger
+const Script = ({ children }) => <script dangerouslySetInnerHTML={{ __html: children }} />;
+
+Script.propTypes = {
+  children: PropTypes.string.isRequired,
+};
 
 class UrbanMapDocument extends Document {
   static async getInitialProps(ctx) {
@@ -18,6 +26,7 @@ class UrbanMapDocument extends Document {
         <Head>
           <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
           <link rel="manifest" href="/static/manifest.json" />
+          <link rel="icon" href="/static/favicon.ico" />
           <meta name="theme-color" content="#72B340" />
           <meta
             name="description"
@@ -27,6 +36,7 @@ class UrbanMapDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <script src="https://apis.google.com/js/platform.js" async defer />
         </body>
       </Html>
     );

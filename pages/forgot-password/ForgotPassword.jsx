@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import { publicOnly } from '../../components/Auth';
 import ForgotPasswordPanel from '../../components/ForgotPasswordPanel';
 import styles from './ForgotPassword.css';
 
@@ -14,4 +15,6 @@ const ForgotPassword = () => (
   </>
 );
 
-export default ForgotPassword;
+ForgotPassword.getInitialProps = async () => ({});
+
+export default publicOnly(ForgotPassword);

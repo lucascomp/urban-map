@@ -1,52 +1,37 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 import Button from '../Button';
 import TextField from '../TextField';
-import redirect from '../../utils/router';
+import { createUserWithEmailAndPassword } from '../../services/auth';
 import styles from './SignUpForm.css';
 
-const SignUpForm = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+const SignUpForm = ({ onLoggedIn }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     setSubmitting(true);
-    redirect('/');
+
+    try {
+      await createUserWithEmailAndPassword(email, password);
+      onLoggedIn();
+    } catch (error) {
+      console.log(error); // TODO: exibir erro pro usuário
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  const onFirstNameChanged = ({ target: { value } }) => setFirstName(value);
-  const onLastNameChanged = ({ target: { value } }) => setLastName(value);
   const onEmailChanged = ({ target: { value } }) => setEmail(value);
   const onPasswordChanged = ({ target: { value } }) => setPassword(value);
   const onConfirmPasswordChanged = ({ target: { value } }) => setConfirmPassword(value);
 
   return (
     <form onSubmit={onSubmit}>
-      <div className={styles.NameWrapper}>
-        <TextField
-          id="firstName"
-          name="firstName"
-          placeholder="Nome"
-          value={firstName}
-          handleChange={onFirstNameChanged}
-          className={styles.FirstName}
-          disabled={submitting}
-        />
-        <TextField
-          id="lastName"
-          name="lastName"
-          placeholder="Sobrenome"
-          value={lastName}
-          handleChange={onLastNameChanged}
-          className={styles.LastName}
-          disabled={submitting}
-        />
-      </div>
       <TextField
         id="email"
         name="email"
@@ -101,6 +86,10 @@ const SignUpForm = () => {
       </div>
     </form>
   );
+};
+
+SignUpForm.propTypes = {
+  onLoggedIn: PropTypes.func.isRequired,
 };
 
 export default SignUpForm;

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 import Button from '../Button';
 import TextField from '../TextField';
-import * as userServices from '../../services/user';
-import redirect from '../../utils/router';
+import { signInWithEmailAndPassword } from '../../services/auth';
 import styles from './LoginForm.css';
 
-const LoginForm = () => {
+const LoginForm = ({ onLoggedIn }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -16,13 +16,10 @@ const LoginForm = () => {
     setSubmitting(true);
 
     try {
-      const res = await userServices.login({ email, password });
-      if (res.status >= 400) {
-        throw res;
-      }
-      redirect('/');
+      await signInWithEmailAndPassword(email, password);
+      onLoggedIn();
     } catch (error) {
-      // TODO: mensagem de erro para o usuário
+      console.log(error); // TODO: exibir erro pro usuário
     } finally {
       setSubmitting(false);
     }
@@ -69,6 +66,10 @@ const LoginForm = () => {
       </Button>
     </form>
   );
+};
+
+LoginForm.propTypes = {
+  onLoggedIn: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

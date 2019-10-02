@@ -19,7 +19,7 @@ const LoginPanel = () => {
       <FacebookLoginButton className={styles.FacebookLoginButton} onLoggedIn={onLoggedIn} fluid />
       <GoogleLoginButton className={styles.GoogleLoginButton} onLoggedIn={onLoggedIn} fluid />
       <Divison>ou</Divison>
-      <LoginForm />
+      <LoginForm onLoggedIn={onLoggedIn} />
       <Link href="/signup">
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <a className={styles.SignUpLink}>

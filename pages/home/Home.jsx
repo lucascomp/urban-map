@@ -1,8 +1,9 @@
 import React from 'react';
 import Head from 'next/head';
+import { privateOnly } from '../../components/Auth';
 import Map from '../../components/Map';
 
-const Index = () => (
+const Home = () => (
   <div>
     <Head>
       <title>Home | Mapa de Acessibilide Urbana</title>
@@ -11,4 +12,6 @@ const Index = () => (
   </div>
 );
 
-export default Index;
+Home.getInitialProps = async () => ({});
+
+export default privateOnly(Home);

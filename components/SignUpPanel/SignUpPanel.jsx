@@ -20,7 +20,7 @@ const SignUpPanel = () => {
         <GoogleLoginButton className={styles.GoogleButton} onLoggedIn={onLoggedIn} />
       </div>
       <Divison>ou crie usando seu e-mail</Divison>
-      <SignUpForm />
+      <SignUpForm onLoggedIn={onLoggedIn} />
     </Panel>
   );
 };

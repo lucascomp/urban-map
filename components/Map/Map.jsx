@@ -1,17 +1,15 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import MapComponents from '../MapComponents';
 
 /* global navigator */
 
 const Map = () => {
-  const onLoad = useCallback(
-    (map) => {
-      navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
-        map.panTo({ lat: latitude, lng: longitude });
-      });
-    },
-  );
+  const onLoad = (map) => {
+    navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
+      map.panTo({ lat: latitude, lng: longitude });
+    });
+  };
 
   const onClick = (event) => {
     if (!event.placeId) {

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useGoogleMap } from '@react-google-maps/api';
 import SearchBox from '../SearchBox';
 import Sidebar from '../Sidebar';
+import redirect from '../../utils/router';
 
 const Menu = () => {
   const map = useGoogleMap();
@@ -11,19 +12,23 @@ const Menu = () => {
     setShowSidebar(true);
   };
 
-  const onSidebarClose = () => {
-    setShowSidebar(false);
-  };
-
   const onPlaceChanged = (place) => {
     map.panTo(place.geometry.location);
     map.setZoom(18);
   };
 
+  const onSidebarClose = () => {
+    setShowSidebar(false);
+  };
+
+  const onLoggedOut = () => {
+    redirect('/');
+  };
+
   return (
     <>
       <SearchBox onMenuClick={onMenuClick} onPlaceChanged={onPlaceChanged} />
-      <Sidebar showSidebar={showSidebar} onClose={onSidebarClose} />
+      <Sidebar showSidebar={showSidebar} onClose={onSidebarClose} onLoggedOut={onLoggedOut} />
     </>
   );
 };
