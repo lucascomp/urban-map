@@ -15,5 +15,8 @@
       "src": "next.config.js",
       "use": "@now/next"
     }
-  ]
+  ],
+  "env": {
+    "GOOGLE_MAPS_API_KEY": "@google-maps-api-key"
+  }
 }
