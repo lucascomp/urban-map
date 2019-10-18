@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import { privateOnly } from '../../components/Auth';
 import Map from '../../components/Map';
 
 const Home = () => (
@@ -12,6 +11,4 @@ const Home = () => (
   </div>
 );
 
-Home.getInitialProps = async () => ({});
-
-export default privateOnly(Home);
+export default Home;

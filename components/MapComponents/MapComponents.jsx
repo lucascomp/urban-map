@@ -22,7 +22,7 @@ const Menu = () => {
   };
 
   const onLoggedOut = () => {
-    redirect('/');
+    redirect('/login');
   };
 
   return (

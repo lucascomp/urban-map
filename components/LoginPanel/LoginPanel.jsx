@@ -10,7 +10,7 @@ import styles from './LoginPanel.css';
 
 const LoginPanel = () => {
   const onLoggedIn = () => {
-    redirect('/');
+    redirect('/home');
   };
 
   return (

@@ -2,14 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Button from '../Button';
-import { signInWithFacebook } from '../../services/auth';
 import FacebookIcon from './facebook.svg';
 import styles from './FacebookLoginButton.css';
 
 const FacebookLoginButton = ({ className, fluid, onLoggedIn }) => {
   const onClick = async () => {
     try {
-      await signInWithFacebook();
       onLoggedIn();
     } catch (error) {
       console.log(error); // TODO: exibir mensagem de erro pro usuário

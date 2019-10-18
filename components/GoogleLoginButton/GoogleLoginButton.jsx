@@ -2,14 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Button from '../Button';
-import { signInWithGoogle } from '../../services/auth';
 import GoogleIcon from './google.svg';
 import styles from './GoogleLoginButton.css';
 
 const GoogleLoginButton = ({ className, fluid, onLoggedIn }) => {
   const onClick = async () => {
     try {
-      await signInWithGoogle();
       onLoggedIn();
     } catch (error) {
       console.log(error); // TODO: exibir mensagem de erro pro usuário

@@ -3,7 +3,6 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import Button from '../Button';
 import TextField from '../TextField';
-import { signInWithEmailAndPassword } from '../../services/auth';
 import styles from './LoginForm.css';
 
 const LoginForm = ({ onLoggedIn }) => {
@@ -16,7 +15,6 @@ const LoginForm = ({ onLoggedIn }) => {
     setSubmitting(true);
 
     try {
-      await signInWithEmailAndPassword(email, password);
       onLoggedIn();
     } catch (error) {
       console.log(error); // TODO: exibir erro pro usuário

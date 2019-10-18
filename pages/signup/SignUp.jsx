@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import { publicOnly } from '../../components/Auth';
 import SignUpPanel from '../../components/SignUpPanel';
 import styles from './SignUp.css';
 
@@ -15,6 +14,4 @@ const SignUp = () => (
   </>
 );
 
-SignUp.getInitialProps = async () => ({});
-
-export default publicOnly(SignUp);
+export default SignUp;

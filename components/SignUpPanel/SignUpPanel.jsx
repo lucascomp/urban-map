@@ -9,7 +9,7 @@ import styles from './SignUpPanel.css';
 
 const SignUpPanel = () => {
   const onLoggedIn = () => {
-    redirect('/');
+    redirect('/home');
   };
 
   return (
