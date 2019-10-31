@@ -11,14 +11,6 @@ const Map = () => {
     });
   };
 
-  const onClick = (event) => {
-    if (!event.placeId) {
-      return;
-    }
-
-    event.stop();
-  };
-
   return (
     <LoadScript libraries={['places']} googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}>
       <GoogleMap
@@ -29,7 +21,6 @@ const Map = () => {
           lng: -43.186902,
         }}
         onLoad={onLoad}
-        onClick={onClick}
         options={{
           mapTypeControl: false,
           fullscreenControl: false,
