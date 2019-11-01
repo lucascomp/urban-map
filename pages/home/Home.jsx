@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import { asPrivate } from '../../components/Auth';
 import Map from '../../components/Map';
 
 const Home = () => (
@@ -11,4 +12,4 @@ const Home = () => (
   </div>
 );
 
-export default Home;
+export default asPrivate()(Home);

@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const withImages = require('next-images');
 const withCss = require('@zeit/next-css');
 const withOffline = require('next-offline');

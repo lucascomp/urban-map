@@ -57,10 +57,10 @@ TextField.propTypes = {
 TextField.defaultProps = {
   type: 'text',
   placeholder: null,
-  className: null,
-  disabled: false,
   value: '',
   handleChange: null,
+  className: null,
+  disabled: false,
 };
 
 export default TextField;

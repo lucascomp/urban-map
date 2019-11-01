@@ -1,0 +1,18 @@
+.Message {
+  margin-bottom: 15px;
+  font-size: 14px;
+  line-height: 1.4;
+  padding: 12px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.success {
+  background-color: #a7e6ca;
+  color: #005220;
+}
+
+.error {
+  background-color: #fcc7ca;
+  color: #8a1925;
+}

@@ -2,29 +2,39 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import Button from '../Button';
+import Message from '../Message';
 import TextField from '../TextField';
+import { login } from '../../services/users';
 import styles from './LoginForm.css';
 
 const LoginForm = ({ onLoggedIn }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   const onSubmit = async (event) => {
     event.preventDefault();
     setSubmitting(true);
 
     try {
+      await login({ email, password });
       onLoggedIn();
     } catch (error) {
-      console.log(error); // TODO: exibir erro pro usuário
-    } finally {
+      setShowErrorMessage(true);
       setSubmitting(false);
     }
   };
 
-  const onEmailChanged = ({ target: { value } }) => setEmail(value);
-  const onPasswordChanged = ({ target: { value } }) => setPassword(value);
+  const onEmailChanged = ({ target: { value } }) => {
+    setEmail(value);
+    setShowErrorMessage(false);
+  };
+
+  const onPasswordChanged = ({ target: { value } }) => {
+    setPassword(value);
+    setShowErrorMessage(false);
+  };
 
   return (
     <form onSubmit={onSubmit}>
@@ -47,6 +57,11 @@ const LoginForm = ({ onLoggedIn }) => {
         handleChange={onPasswordChanged}
         disabled={submitting}
       />
+      {showErrorMessage && (
+        <Message type="error">
+          E-mail ou senha inválidos.
+        </Message>
+      )}
       <Link href="/forgot-password">
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <a className={styles.ForgotPasswordLink}>

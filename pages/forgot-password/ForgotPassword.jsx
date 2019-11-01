@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import { asPublicOnly } from '../../components/Auth';
 import ForgotPasswordPanel from '../../components/ForgotPasswordPanel';
 import styles from './ForgotPassword.css';
 
@@ -14,4 +15,4 @@ const ForgotPassword = () => (
   </>
 );
 
-export default ForgotPassword;
+export default asPublicOnly()(ForgotPassword);

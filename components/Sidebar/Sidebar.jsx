@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { logout } from '../../services/users';
 import BackwardIcon from './backward.svg';
 import styles from './Sidebar.css';
 
@@ -12,11 +13,8 @@ const Sidebar = ({ showSidebar, onClose, onLoggedOut }) => {
   );
 
   const onLogoutClick = async () => {
-    try {
-      onLoggedOut();
-    } catch (error) {
-      console.log(error); // TODO: exibir mensagem de erro pro usuário
-    }
+    await logout();
+    onLoggedOut();
   };
 
   return (

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useGoogleMap } from '@react-google-maps/api';
 import SearchBox from '../SearchBox';
 import Sidebar from '../Sidebar';
-import redirect from '../../utils/router';
+
+/* global window */
 
 const Menu = () => {
   const map = useGoogleMap();
@@ -22,7 +23,7 @@ const Menu = () => {
   };
 
   const onLoggedOut = () => {
-    redirect('/login');
+    window.location.reload();
   };
 
   return (

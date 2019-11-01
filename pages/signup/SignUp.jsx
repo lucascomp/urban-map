@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import { asPublicOnly } from '../../components/Auth';
 import SignUpPanel from '../../components/SignUpPanel';
 import styles from './SignUp.css';
 
@@ -14,4 +15,4 @@ const SignUp = () => (
   </>
 );
 
-export default SignUp;
+export default asPublicOnly()(SignUp);
