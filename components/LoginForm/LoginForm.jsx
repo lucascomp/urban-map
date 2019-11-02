@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
+import validator from 'validator';
 import Button from '../Button';
 import Message from '../Message';
 import TextField from '../TextField';
@@ -11,29 +12,41 @@ const LoginForm = ({ onLoggedIn }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const onSubmit = async (event) => {
     event.preventDefault();
     setSubmitting(true);
 
     try {
+      if (!validator.isEmail(email)) {
+        throw new Error('E-mail inválido');
+      }
+
+      if (password.length < 6) {
+        throw new Error('A senha deve ter pelo menos 6 caracteres');
+      }
+
       await login({ email, password });
       onLoggedIn();
-    } catch (error) {
-      setShowErrorMessage(true);
+    } catch ({ message }) {
+      setErrorMessage(message);
       setSubmitting(false);
     }
   };
 
+  const clearErrorMessage = () => {
+    setErrorMessage('');
+  };
+
   const onEmailChanged = ({ target: { value } }) => {
     setEmail(value);
-    setShowErrorMessage(false);
+    clearErrorMessage();
   };
 
   const onPasswordChanged = ({ target: { value } }) => {
     setPassword(value);
-    setShowErrorMessage(false);
+    clearErrorMessage();
   };
 
   return (
@@ -57,9 +70,9 @@ const LoginForm = ({ onLoggedIn }) => {
         handleChange={onPasswordChanged}
         disabled={submitting}
       />
-      {showErrorMessage && (
+      {errorMessage && (
         <Message type="error">
-          E-mail ou senha inválidos.
+          {errorMessage}
         </Message>
       )}
       <Link href="/forgot-password">

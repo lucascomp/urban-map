@@ -5,11 +5,7 @@ const { SERVICE_URBAN_MAP_API_BASE_URL } = process.env;
 
 export const login = async ({ email, password }) => {
   const url = `${SERVICE_URBAN_MAP_API_BASE_URL}/login`;
-  const res = await post(url, { email, password });
-
-  if (!res.ok) {
-    throw new Error('E-mail e/ou senha incorretos');
-  }
+  await post(url, { email, password });
 };
 
 export const logout = async () => {
@@ -28,15 +24,10 @@ export const signup = async ({
   password,
 }) => {
   const url = `${SERVICE_URBAN_MAP_API_BASE_URL}/signup`;
-  const res = await post(url, {
+  await post(url, {
     firstName,
     lastName,
     email,
     password,
   });
-
-  if (!res.ok) {
-    const { message } = await res.json();
-    throw new Error(message);
-  }
 };

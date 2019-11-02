@@ -15,7 +15,7 @@ const SignUpForm = ({ onLoggedIn }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -49,8 +49,8 @@ const SignUpForm = ({ onLoggedIn }) => {
         password,
       });
       onLoggedIn();
-    } catch (error) {
-      setErrorMessage(error.message);
+    } catch ({ message }) {
+      setErrorMessage(message);
       setSubmitting(false);
     }
   };

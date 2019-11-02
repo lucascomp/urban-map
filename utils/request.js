@@ -6,11 +6,22 @@ const headers = {
 };
 
 const fetchWrapper = async (url, config) => {
-  try {
-    return await fetch(url, config);
-  } catch (error) {
-    throw new Error('Não foi possível se conectar ao servidor');
+  const request = async () => {
+    try {
+      return await fetch(url, config);
+    } catch (error) {
+      throw new Error('Não foi possível se conectar ao servidor');
+    }
+  };
+
+  const res = await request();
+
+  if (res.ok) {
+    return res;
   }
+
+  const { message } = await res.json();
+  throw new Error(message);
 };
 
 export const get = async (url) => {
