@@ -1,35 +1,111 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
+import validator from 'validator';
 import Button from '../Button';
+import Message from '../Message';
 import TextField from '../TextField';
+import { signup } from '../../services/users';
 import styles from './SignUpForm.css';
 
 const SignUpForm = ({ onLoggedIn }) => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
 
   const onSubmit = async (event) => {
     event.preventDefault();
     setSubmitting(true);
 
     try {
+      if (firstName.length < 2) {
+        throw new Error('Nome inválido');
+      }
+
+      if (lastName.length < 2) {
+        throw new Error('Sobrenome inválido');
+      }
+
+      if (!validator.isEmail(email)) {
+        throw new Error('E-mail inválido');
+      }
+
+      if (password.length < 6) {
+        throw new Error('A senha deve ter pelo menos 6 caracteres');
+      }
+
+      if (password !== confirmPassword) {
+        throw new Error('As senhas devem coincidir');
+      }
+
+      await signup({
+        email,
+        firstName,
+        lastName,
+        password,
+      });
       onLoggedIn();
     } catch (error) {
-      console.log(error); // TODO: exibir erro pro usuário
-    } finally {
+      setErrorMessage(error.message);
       setSubmitting(false);
     }
   };
 
-  const onEmailChanged = ({ target: { value } }) => setEmail(value);
-  const onPasswordChanged = ({ target: { value } }) => setPassword(value);
-  const onConfirmPasswordChanged = ({ target: { value } }) => setConfirmPassword(value);
+  const clearErrorMessage = () => {
+    setErrorMessage('');
+  };
+
+  const onFirstNameChanged = ({ target: { value } }) => {
+    setFirstName(value);
+    clearErrorMessage();
+  };
+
+  const onLaseNameChanged = ({ target: { value } }) => {
+    setLastName(value);
+    clearErrorMessage();
+  };
+
+  const onEmailChanged = ({ target: { value } }) => {
+    setEmail(value);
+    clearErrorMessage();
+  };
+
+  const onPasswordChanged = ({ target: { value } }) => {
+    setPassword(value);
+    clearErrorMessage();
+  };
+
+  const onConfirmPasswordChanged = ({ target: { value } }) => {
+    setConfirmPassword(value);
+    clearErrorMessage();
+  };
 
   return (
     <form onSubmit={onSubmit}>
+      <div className={styles.NameWrapper}>
+        <TextField
+          id="firstName"
+          name="firstName"
+          placeholder="Nome"
+          value={firstName}
+          handleChange={onFirstNameChanged}
+          className={styles.FirstName}
+          disabled={submitting}
+        />
+        <TextField
+          id="lastName"
+          name="lastName"
+          placeholder="Sobrenome"
+          value={lastName}
+          handleChange={onLaseNameChanged}
+          className={styles.LastName}
+          disabled={submitting}
+        />
+      </div>
       <TextField
         id="email"
         name="email"
@@ -61,6 +137,11 @@ const SignUpForm = ({ onLoggedIn }) => {
           disabled={submitting}
         />
       </div>
+      {errorMessage && (
+        <Message type="error">
+          {errorMessage}
+        </Message>
+      )}
       <div className={styles.FormActions}>
         <Link href="/login">
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}

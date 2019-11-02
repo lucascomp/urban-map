@@ -1,9 +1,11 @@
-.PasswordWrapper {
+.NameWrapper, .PasswordWrapper {
   display: flex;
   flex-wrap: wrap;
   margin: -6px -7.5px 6px -7.5px;
 }
 
+.FirstName,
+.LastName,
 .Password,
 .ConfirmPassword {
   flex: 1;
