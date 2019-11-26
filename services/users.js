@@ -3,9 +3,10 @@ import { forceClearSession } from '../utils/auth';
 
 const { SERVICE_URBAN_MAP_API_BASE_URL } = process.env;
 
-export const login = async ({ email, password }) => {
+export const login = ({ email, password }) => {
   const url = `${SERVICE_URBAN_MAP_API_BASE_URL}/login`;
-  await post(url, { email, password });
+
+  return post(url, { email, password });
 };
 
 export const logout = async () => {
@@ -17,14 +18,15 @@ export const logout = async () => {
   }
 };
 
-export const signup = async ({
+export const signup = ({
   firstName,
   lastName,
   email,
   password,
 }) => {
   const url = `${SERVICE_URBAN_MAP_API_BASE_URL}/signup`;
-  await post(url, {
+
+  return put(url, {
     firstName,
     lastName,
     email,
