@@ -16,8 +16,8 @@ const LoginPanel = () => {
   return (
     <Panel>
       <h3 className={styles.Title}>Mapa de Acessibilidade Urbana</h3>
-      <FacebookLoginButton className={styles.FacebookLoginButton} onLoggedIn={onLoggedIn} fluid />
-      <GoogleLoginButton className={styles.GoogleLoginButton} onLoggedIn={onLoggedIn} fluid />
+      <FacebookLoginButton className={styles.FacebookLoginButton} fluid />
+      <GoogleLoginButton className={styles.GoogleLoginButton} fluid />
       <Divison>ou</Divison>
       <LoginForm onLoggedIn={onLoggedIn} />
       <Link href="/signup">

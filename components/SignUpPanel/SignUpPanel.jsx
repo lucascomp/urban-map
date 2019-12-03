@@ -16,8 +16,8 @@ const SignUpPanel = () => {
     <Panel>
       <h3 className={styles.Title}>Mapa de Acessibilidade Urbana</h3>
       <div className={styles.SocialLoginWrapper}>
-        <FacebookLoginButton className={styles.FacebookButton} onLoggedIn={onLoggedIn} />
-        <GoogleLoginButton className={styles.GoogleButton} onLoggedIn={onLoggedIn} />
+        <FacebookLoginButton className={styles.FacebookButton} />
+        <GoogleLoginButton className={styles.GoogleButton} />
       </div>
       <Divison>ou crie usando seu e-mail</Divison>
       <SignUpForm onLoggedIn={onLoggedIn} />

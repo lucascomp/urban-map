@@ -2,17 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Button from '../Button';
+import { loginWithGoogle } from '../../services/users';
 import GoogleIcon from './google.svg';
 import styles from './GoogleLoginButton.css';
 
-const GoogleLoginButton = ({ className, fluid, onLoggedIn }) => {
-  const onClick = async () => {
-    try {
-      onLoggedIn();
-    } catch (error) {
-      console.log(error); // TODO: exibir mensagem de erro pro usuário
-    }
-  };
+const GoogleLoginButton = ({ className, fluid }) => {
+  const onClick = () => loginWithGoogle();
 
   return (
     <Button className={classNames(styles.Button, className)} fluid={fluid} onClick={onClick}>
@@ -25,7 +20,6 @@ const GoogleLoginButton = ({ className, fluid, onLoggedIn }) => {
 GoogleLoginButton.propTypes = {
   className: PropTypes.string,
   fluid: PropTypes.bool,
-  onLoggedIn: PropTypes.func.isRequired,
 };
 
 GoogleLoginButton.defaultProps = {

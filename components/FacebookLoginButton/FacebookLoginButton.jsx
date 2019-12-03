@@ -2,17 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Button from '../Button';
+import { loginWithFacebook } from '../../services/users';
 import FacebookIcon from './facebook.svg';
 import styles from './FacebookLoginButton.css';
 
-const FacebookLoginButton = ({ className, fluid, onLoggedIn }) => {
-  const onClick = async () => {
-    try {
-      onLoggedIn();
-    } catch (error) {
-      console.log(error); // TODO: exibir mensagem de erro pro usuário
-    }
-  };
+const FacebookLoginButton = ({ className, fluid }) => {
+  const onClick = () => loginWithFacebook();
 
   return (
     <Button className={classNames(styles.Button, className)} fluid={fluid} onClick={onClick}>
@@ -25,7 +20,6 @@ const FacebookLoginButton = ({ className, fluid, onLoggedIn }) => {
 FacebookLoginButton.propTypes = {
   className: PropTypes.string,
   fluid: PropTypes.bool,
-  onLoggedIn: PropTypes.func.isRequired,
 };
 
 FacebookLoginButton.defaultProps = {

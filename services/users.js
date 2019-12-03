@@ -3,10 +3,24 @@ import { forceClearSession } from '../utils/auth';
 
 const { SERVICE_URBAN_MAP_API_BASE_URL } = process.env;
 
+/* global window */
+
 export const login = ({ email, password }) => {
   const url = `${SERVICE_URBAN_MAP_API_BASE_URL}/login`;
 
   return post(url, { email, password });
+};
+
+const loginWithProvider = (provider) => {
+  window.location.replace(`${SERVICE_URBAN_MAP_API_BASE_URL}/login/${provider}`);
+};
+
+export const loginWithFacebook = () => {
+  loginWithProvider('facebook');
+};
+
+export const loginWithGoogle = () => {
+  loginWithProvider('google');
 };
 
 export const logout = async () => {
