@@ -24,6 +24,17 @@ const fetchWrapper = async (url, config) => {
   throw new Error(message);
 };
 
+const requestWithBody = async (url, body, method) => {
+  const config = {
+    body: JSON.stringify(body),
+    credentials,
+    headers,
+    method,
+  };
+
+  return fetchWrapper(url, config);
+};
+
 export const get = async (url) => {
   const config = {
     credentials,
@@ -33,13 +44,6 @@ export const get = async (url) => {
   return fetchWrapper(url, config);
 };
 
-export const post = async (url, body) => {
-  const config = {
-    body: JSON.stringify(body),
-    credentials,
-    headers,
-    method: 'POST',
-  };
+export const post = (url, body) => requestWithBody(url, body, 'POST');
 
-  return fetchWrapper(url, config);
-};
+export const put = (url, body) => requestWithBody(url, body, 'PUT');
