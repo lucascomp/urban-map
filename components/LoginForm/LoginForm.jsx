@@ -14,8 +14,13 @@ const LoginForm = ({ onLoggedIn }) => {
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  const clearErrorMessage = () => {
+    setErrorMessage('');
+  };
+
   const onSubmit = async (event) => {
     event.preventDefault();
+    clearErrorMessage();
     setSubmitting(true);
 
     try {
@@ -31,12 +36,9 @@ const LoginForm = ({ onLoggedIn }) => {
       onLoggedIn();
     } catch ({ message }) {
       setErrorMessage(message);
+    } finally {
       setSubmitting(false);
     }
-  };
-
-  const clearErrorMessage = () => {
-    setErrorMessage('');
   };
 
   const onEmailChanged = ({ target: { value } }) => {

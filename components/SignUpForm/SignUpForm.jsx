@@ -17,8 +17,13 @@ const SignUpForm = ({ onLoggedIn }) => {
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  const clearErrorMessage = () => {
+    setErrorMessage('');
+  };
+
   const onSubmit = async (event) => {
     event.preventDefault();
+    clearErrorMessage();
     setSubmitting(true);
 
     try {
@@ -51,12 +56,9 @@ const SignUpForm = ({ onLoggedIn }) => {
       onLoggedIn();
     } catch ({ message }) {
       setErrorMessage(message);
+    } finally {
       setSubmitting(false);
     }
-  };
-
-  const clearErrorMessage = () => {
-    setErrorMessage('');
   };
 
   const onFirstNameChanged = ({ target: { value } }) => {

@@ -5,22 +5,32 @@ const { SERVICE_URBAN_MAP_API_BASE_URL } = process.env;
 
 /* global window */
 
+export const forgotPassword = async ({ email }) => {
+  const url = `${SERVICE_URBAN_MAP_API_BASE_URL}/forgot-password`;
+
+  return post(url, { email });
+};
+
 export const login = ({ email, password }) => {
   const url = `${SERVICE_URBAN_MAP_API_BASE_URL}/login`;
 
   return post(url, { email, password });
 };
 
-const loginWithProvider = (provider) => {
+const loginWithProvider = ({ provider }) => {
   window.location.replace(`${SERVICE_URBAN_MAP_API_BASE_URL}/login/${provider}`);
 };
 
 export const loginWithFacebook = () => {
-  loginWithProvider('facebook');
+  const provider = 'facebook';
+
+  loginWithProvider({ provider });
 };
 
 export const loginWithGoogle = () => {
-  loginWithProvider('google');
+  const provider = 'google';
+
+  loginWithProvider({ provider });
 };
 
 export const logout = async () => {
@@ -36,6 +46,15 @@ export const logout = async () => {
   } catch (error) {
     forceClearSession();
   }
+};
+
+export const resetPassword = async ({ token, password }) => {
+  const url = `${SERVICE_URBAN_MAP_API_BASE_URL}/reset-password`;
+
+  return post(url, {
+    token,
+    password,
+  });
 };
 
 export const signup = ({
