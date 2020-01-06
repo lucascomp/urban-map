@@ -2,19 +2,18 @@ import React, { useState } from 'react';
 import { useGoogleMap } from '@react-google-maps/api';
 import SearchBox from '../SearchBox';
 import Sidebar from '../Sidebar';
-
-/* global window */
+import redirect from '../../utils/router';
 
 const Menu = () => {
-  const map = useGoogleMap();
   const [showSidebar, setShowSidebar] = useState(false);
+  const map = useGoogleMap();
 
   const onMenuClick = () => {
     setShowSidebar(true);
   };
 
-  const onPlaceChanged = (place) => {
-    map.panTo(place.geometry.location);
+  const onPlaceChanged = ({ geometry: { location } }) => {
+    map.panTo(location);
     map.setZoom(18);
   };
 
@@ -23,13 +22,20 @@ const Menu = () => {
   };
 
   const onLoggedOut = () => {
-    window.location.reload();
+    redirect('/login');
   };
 
   return (
     <>
-      <SearchBox onMenuClick={onMenuClick} onPlaceChanged={onPlaceChanged} />
-      <Sidebar showSidebar={showSidebar} onClose={onSidebarClose} onLoggedOut={onLoggedOut} />
+      <SearchBox
+        onMenuClick={onMenuClick}
+        onPlaceChanged={onPlaceChanged}
+      />
+      <Sidebar
+        onLoggedOut={onLoggedOut}
+        showSidebar={showSidebar}
+        onClose={onSidebarClose}
+      />
     </>
   );
 };

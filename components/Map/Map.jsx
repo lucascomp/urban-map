@@ -1,52 +1,74 @@
 import React from 'react';
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
-import MapComponents from '../MapComponents';
+import { GoogleMap, LoadScriptNext } from '@react-google-maps/api';
+import MapListeners from '../MapListeners';
+import Menu from '../Menu';
 
-/* global navigator */
-/* global google */
+const { GOOGLE_MAPS_API_KEY } = process.env;
 
 const Map = () => {
-  const onLoad = (map) => {
-    const localMarker = new google.maps.Marker({
-      map,
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 7.5,
-        fillColor: '#f17569',
-        fillOpacity: 1,
-        strokeWeight: 0.2,
+  const center = { lat: -22.906955, lng: -43.186902 };
+  const libraries = ['places'];
+  const mapContainerStyle = { height: '100vh' };
+  const options = {
+    fullscreenControl: false,
+    mapTypeControl: false,
+    minZoom: 15,
+    streetViewControl: false,
+    styles: [
+      {
+        featureType: 'landscape',
+        elementType: 'labels.icon',
+        stylers: [
+          {
+            visibility: 'off',
+          },
+        ],
       },
-    });
-
-    navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
-      map.panTo({ lat: latitude, lng: longitude });
-    });
-
-    navigator.geolocation.watchPosition(({ coords: { latitude: lat, longitude: lng } }) => {
-      localMarker.setPosition({ lat, lng });
-    });
+      {
+        featureType: 'poi',
+        stylers: [
+          {
+            visibility: 'off',
+          },
+        ],
+      },
+      {
+        featureType: 'road',
+        elementType: 'labels.icon',
+        stylers: [
+          {
+            visibility: 'off',
+          },
+        ],
+      },
+      {
+        featureType: 'transit',
+        stylers: [
+          {
+            visibility: 'off',
+          },
+        ],
+      },
+    ],
+    zoomControl: false,
   };
+  const zoom = 15;
 
   return (
-    <LoadScript libraries={['places']} googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}>
+    <LoadScriptNext
+      libraries={libraries}
+      googleMapsApiKey={GOOGLE_MAPS_API_KEY}
+    >
       <GoogleMap
-        mapContainerStyle={{ height: '100vh' }}
-        zoom={20}
-        center={{
-          lat: -22.906955,
-          lng: -43.186902,
-        }}
-        onLoad={onLoad}
-        options={{
-          mapTypeControl: false,
-          fullscreenControl: false,
-          streetViewControl: false,
-          zoomControl: false,
-        }}
+        center={center}
+        mapContainerStyle={mapContainerStyle}
+        options={options}
+        zoom={zoom}
       >
-        <MapComponents />
+        <MapListeners />
+        <Menu />
       </GoogleMap>
-    </LoadScript>
+    </LoadScriptNext>
   );
 };
 

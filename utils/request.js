@@ -1,13 +1,17 @@
 import fetch from 'isomorphic-fetch';
 
+const { SERVICE_URBAN_MAP_API_BASE_URL } = process.env;
+
 const credentials = 'include';
 const headers = {
   'Content-Type': 'application/json',
 };
 
-const fetchWrapper = async (url, config) => {
+const fetchWrapper = async (path, config) => {
   const request = async () => {
     try {
+      const url = `${SERVICE_URBAN_MAP_API_BASE_URL}${path}`;
+
       return await fetch(url, config);
     } catch (error) {
       throw new Error('Não foi possível se conectar ao servidor');
@@ -24,7 +28,7 @@ const fetchWrapper = async (url, config) => {
   throw new Error(message);
 };
 
-const requestWithBody = async (url, body, method) => {
+const requestWithBody = async (path, body, method) => {
   const config = {
     body: JSON.stringify(body),
     credentials,
@@ -32,18 +36,18 @@ const requestWithBody = async (url, body, method) => {
     method,
   };
 
-  return fetchWrapper(url, config);
+  return fetchWrapper(path, config);
 };
 
-export const get = async (url) => {
+export const get = async (path) => {
   const config = {
     credentials,
     method: 'GET',
   };
 
-  return fetchWrapper(url, config);
+  return fetchWrapper(path, config);
 };
 
-export const post = (url, body) => requestWithBody(url, body, 'POST');
+export const post = (path, body) => requestWithBody(path, body, 'POST');
 
-export const put = (url, body) => requestWithBody(url, body, 'PUT');
+export const put = (path, body) => requestWithBody(path, body, 'PUT');

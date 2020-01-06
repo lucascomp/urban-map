@@ -1,24 +1,23 @@
-import { get, post, put } from '../utils/request';
 import { forceClearSession } from '../utils/auth';
+import { get, post, put } from '../utils/request';
+import redirect from '../utils/router';
 
 const { SERVICE_URBAN_MAP_API_BASE_URL } = process.env;
 
-/* global window */
+export const forgotPassword = ({ email }) => {
+  const path = '/forgot-password';
 
-export const forgotPassword = async ({ email }) => {
-  const url = `${SERVICE_URBAN_MAP_API_BASE_URL}/forgot-password`;
-
-  return post(url, { email });
+  return post(path, { email });
 };
 
 export const login = ({ email, password }) => {
-  const url = `${SERVICE_URBAN_MAP_API_BASE_URL}/login`;
+  const path = '/login';
 
-  return post(url, { email, password });
+  return post(path, { email, password });
 };
 
 const loginWithProvider = ({ provider }) => {
-  window.location.replace(`${SERVICE_URBAN_MAP_API_BASE_URL}/login/${provider}`);
+  redirect(`${SERVICE_URBAN_MAP_API_BASE_URL}/login/${provider}`);
 };
 
 export const loginWithFacebook = () => {
@@ -34,10 +33,10 @@ export const loginWithGoogle = () => {
 };
 
 export const logout = async () => {
-  const url = `${SERVICE_URBAN_MAP_API_BASE_URL}/logout`;
+  const path = '/logout';
 
   try {
-    const res = await get(url);
+    const res = await get(path);
 
     if (!res.ok) {
       const message = await res.text();
@@ -48,10 +47,10 @@ export const logout = async () => {
   }
 };
 
-export const resetPassword = async ({ token, password }) => {
-  const url = `${SERVICE_URBAN_MAP_API_BASE_URL}/reset-password`;
+export const resetPassword = ({ token, password }) => {
+  const path = '/reset-password';
 
-  return post(url, {
+  return post(path, {
     token,
     password,
   });
@@ -63,9 +62,9 @@ export const signup = ({
   email,
   password,
 }) => {
-  const url = `${SERVICE_URBAN_MAP_API_BASE_URL}/signup`;
+  const path = '/signup';
 
-  return put(url, {
+  return put(path, {
     firstName,
     lastName,
     email,
