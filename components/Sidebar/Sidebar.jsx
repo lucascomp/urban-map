@@ -5,10 +5,15 @@ import { logout } from '../../services/users';
 import BackwardIcon from './backward.svg';
 import styles from './Sidebar.css';
 
-const Sidebar = ({ showSidebar, onClose, onLoggedOut }) => {
-  const sideBar = classNames(
-    styles.SideBar, {
-      [styles.opened]: showSidebar,
+const Sidebar = ({
+  onRequestClose,
+  onLoggedOut,
+  onRegisterAccessibilityClick,
+  active,
+}) => {
+  const sidebarClassName = classNames(
+    styles.Sidebar, {
+      [styles.active]: active,
     },
   );
 
@@ -19,19 +24,22 @@ const Sidebar = ({ showSidebar, onClose, onLoggedOut }) => {
 
   return (
     <>
-      {showSidebar && (
+      {active && (
         <div className={styles.Background}>
-          <button type="button" onClick={onClose} aria-label="menu-background" />
+          <button type="button" onClick={onRequestClose} aria-label="menu-background" />
         </div>
       )}
-      <div className={sideBar}>
+      <div className={sidebarClassName}>
         <div className={styles.Header}>
           <h3>Mapa de Acessibilidade Urbana</h3>
-          <button className={styles.Backward} type="button" onClick={onClose}>
+          <button className={styles.Backward} type="button" onClick={onRequestClose}>
             <img src={BackwardIcon} alt="backward-icon" />
           </button>
         </div>
         <ul className={styles.Widget}>
+          <li className={styles.Item}>
+            <button onClick={onRegisterAccessibilityClick} type="button">Cadastrar Acessibilidade</button>
+          </li>
           <li className={styles.Item}>
             <button onClick={onLogoutClick} type="button">Logout</button>
           </li>
@@ -42,13 +50,14 @@ const Sidebar = ({ showSidebar, onClose, onLoggedOut }) => {
 };
 
 Sidebar.propTypes = {
-  showSidebar: PropTypes.bool,
-  onClose: PropTypes.func.isRequired,
+  active: PropTypes.bool,
+  onRequestClose: PropTypes.func.isRequired,
   onLoggedOut: PropTypes.func.isRequired,
+  onRegisterAccessibilityClick: PropTypes.func.isRequired,
 };
 
 Sidebar.defaultProps = {
-  showSidebar: false,
+  active: false,
 };
 
 export default Sidebar;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { GoogleMap, LoadScriptNext } from '@react-google-maps/api';
-import MapListeners from '../MapListeners';
-import Menu from '../Menu';
+import MapComponents from '../MapComponents/MapComponents';
 
 const { GOOGLE_MAPS_API_KEY } = process.env;
 
@@ -12,7 +11,7 @@ const Map = () => {
   const options = {
     fullscreenControl: false,
     mapTypeControl: false,
-    minZoom: 15,
+    minZoom: 16,
     streetViewControl: false,
     styles: [
       {
@@ -52,7 +51,7 @@ const Map = () => {
     ],
     zoomControl: false,
   };
-  const zoom = 15;
+  const zoom = 16;
 
   return (
     <LoadScriptNext
@@ -65,8 +64,7 @@ const Map = () => {
         options={options}
         zoom={zoom}
       >
-        <MapListeners />
-        <Menu />
+        <MapComponents />
       </GoogleMap>
     </LoadScriptNext>
   );

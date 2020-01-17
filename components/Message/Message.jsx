@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import styles from './Message.css';
 
 const Message = ({ type, children, className: classNameProp }) => {
-
   const className = classNames(
     styles.Message,
     {

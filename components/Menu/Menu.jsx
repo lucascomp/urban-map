@@ -1,24 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { useGoogleMap } from '@react-google-maps/api';
 import SearchBox from '../SearchBox';
 import Sidebar from '../Sidebar';
 import redirect from '../../utils/router';
 
-const Menu = () => {
-  const [showSidebar, setShowSidebar] = useState(false);
+const Menu = ({
+  onMenuClick,
+  onRegisterAccessibilityClick,
+  onSidebarRequestClose,
+  sidebarActive,
+}) => {
   const map = useGoogleMap();
-
-  const onMenuClick = () => {
-    setShowSidebar(true);
-  };
 
   const onPlaceChanged = ({ geometry: { location } }) => {
     map.panTo(location);
     map.setZoom(18);
-  };
-
-  const onSidebarClose = () => {
-    setShowSidebar(false);
   };
 
   const onLoggedOut = () => {
@@ -32,12 +29,24 @@ const Menu = () => {
         onPlaceChanged={onPlaceChanged}
       />
       <Sidebar
+        active={sidebarActive}
         onLoggedOut={onLoggedOut}
-        showSidebar={showSidebar}
-        onClose={onSidebarClose}
+        onRegisterAccessibilityClick={onRegisterAccessibilityClick}
+        onRequestClose={onSidebarRequestClose}
       />
     </>
   );
+};
+
+Menu.propTypes = {
+  onMenuClick: PropTypes.func.isRequired,
+  onRegisterAccessibilityClick: PropTypes.func.isRequired,
+  onSidebarRequestClose: PropTypes.func.isRequired,
+  sidebarActive: PropTypes.bool,
+};
+
+Menu.defaultProps = {
+  sidebarActive: false,
 };
 
 export default Menu;

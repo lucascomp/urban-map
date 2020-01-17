@@ -1,0 +1,67 @@
+.Wrapper {
+  width: 450px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 12px;
+  background-color: white;
+  margin: 0 8px 8px 0;
+  border-radius: 8px 8px 0 0;
+  border-bottom: 1px solid #DADCE0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.6), 0 -1px 0px rgba(0,0,0,0.06);
+}
+
+.Container {
+  display: flex;
+  flex-direction: column;
+}
+
+.Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Title {
+  margin-right: 15px;
+}
+
+.Header, .Form {
+  margin-bottom: 10px;
+}
+
+.Form {
+  display: flex;
+  font-size: 14px;
+}
+
+.Field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.TextField {
+  margin-left: 15px;
+}
+
+.Search {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+@media (max-width: 500px) {
+  .Wrapper {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  .Container {
+    margin: 8px;
+    width: initial;
+  }
+}

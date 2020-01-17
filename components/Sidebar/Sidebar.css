@@ -1,5 +1,5 @@
 .Background,
-.SideBar {
+.Sidebar {
   position: fixed;
   top: 0;
   height: 100%;
@@ -16,7 +16,7 @@
   cursor: initial;
 }
 
-.SideBar {
+.Sidebar {
   background: white;
   box-shadow: 0 -1px 24px rgba(0,0,0,0.4);
   width: 320px;
@@ -24,7 +24,7 @@
   transition-duration: .3s;
 }
 
-.opened {
+.active {
   transform: translateX(340px);
 }
 

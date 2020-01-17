@@ -9,12 +9,13 @@ import styles from './SearchBox.css';
 
 /* global google */
 
+const fields = ['name', 'geometry', 'place_id'];
+
 const SearchBox = ({ onMenuClick, onPlaceChanged }) => {
   const map = useGoogleMap();
   const [query, setQuery] = useState('');
   const [submitting, setSubmittingQuery] = useState(false);
   const service = new google.maps.places.PlacesService(map);
-  const fields = ['name', 'geometry', 'place_id'];
 
   const searchPlaces = () => new Promise((resolve, reject) => {
     service.findPlaceFromQuery({ query, fields }, (results, status) => {
