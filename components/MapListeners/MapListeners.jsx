@@ -2,11 +2,17 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useGoogleMap } from '@react-google-maps/api';
 import RegisterBox from '../RegisterBox';
-import { getMarkers, drawMarkers, cleanMarkers } from '../../services/markers';
+import {
+  getMarkers,
+  drawMarkers,
+  drawRegisterMarker,
+  cleanMarkers,
+  removeListener,
+} from '../../services/markers';
 import { arrayDiff, arrayIntersection } from '../../utils/array';
 import { markerComparator } from '../../utils/marker';
 
-/* global google */
+let registerMarker = null;
 
 const MapListeners = ({
   onCancelRegister,
@@ -17,8 +23,23 @@ const MapListeners = ({
   const [markers, setMarkers] = useState([]);
   const [registerLatitude, setRegisterLatitude] = useState('');
   const [registerLongitude, setRegisterLongitude] = useState('');
+  const [registerAccessibility, setRegisterAccessibility] = useState('1');
   const [searchError, setSearchError] = useState(false);
   const map = useGoogleMap();
+
+  const clearRegisterMarker = () => {
+    if (registerMarker) {
+      cleanMarkers([registerMarker]);
+      registerMarker = null;
+    }
+  };
+
+  const clearRegisters = () => {
+    clearRegisterMarker();
+    setRegisterLatitude('');
+    setRegisterLongitude('');
+    setRegisterAccessibility('1');
+  };
 
   useEffect(() => {
     const idleListener = map.addListener('idle', async () => {
@@ -38,10 +59,27 @@ const MapListeners = ({
       setMarkers([...markersToKeep, ...newMarkers]);
     });
 
-    return () => google.maps.event.removeListener(idleListener);
+    return () => removeListener(idleListener);
   });
 
   useEffect(() => {
+    const fixLatLng = (value) => value.toFixed(6);
+
+    const setRegisterLatitudeFixed = (lat) => {
+      const fixedLat = fixLatLng(lat);
+      setRegisterLatitude(fixedLat);
+    };
+
+    const setRegisterLongitudeFixed = (lng) => {
+      const fixedLng = fixLatLng(lng);
+      setRegisterLongitude(fixedLng);
+    };
+
+    const updateLatLng = ({ latLng }) => {
+      setRegisterLatitudeFixed(latLng.lat());
+      setRegisterLongitudeFixed(latLng.lng());
+    };
+
     const clickListener = map.addListener('click', async ({ latLng }) => {
       if (!registering) {
         return;
@@ -50,20 +88,39 @@ const MapListeners = ({
       const lat = latLng.lat();
       const lng = latLng.lng();
 
-      setRegisterLatitude(lat.toString());
-      setRegisterLongitude(lng.toString());
+      clearRegisterMarker();
+
+      registerMarker = drawRegisterMarker(map);
+      registerMarker.addListener('drag', updateLatLng);
+      registerMarker.setPosition({ lat, lng });
+
+      updateLatLng({ latLng });
       setSearchError(false);
     });
 
-    return () => google.maps.event.removeListener(clickListener);
+    return () => removeListener(clickListener);
   });
 
   const onRegisterBoxCancel = () => {
+    clearRegisters();
     onCancelRegister();
   };
 
-  const onRegisterBoxConfirm = () => {
-    onConfirmRegister();
+  const onRegisterBoxConfirm = async () => {
+    const successfullyRegistered = await onConfirmRegister({
+      latitude: registerLatitude,
+      longitude: registerLongitude,
+      accessibility: registerAccessibility,
+    });
+
+    if (successfullyRegistered) {
+      map.panTo({
+        lat: parseFloat(registerLatitude),
+        lng: parseFloat(registerLongitude),
+      });
+    }
+
+    clearRegisters();
   };
 
   const onRegisterLatitudeChanged = (latitude) => {
@@ -73,6 +130,11 @@ const MapListeners = ({
 
   const onRegisterLongitudeChanged = (longitude) => {
     setRegisterLongitude(longitude);
+    setSearchError(false);
+  };
+
+  const onRegisterAccessibilityChanged = (accessibility) => {
+    setRegisterAccessibility(accessibility);
     setSearchError(false);
   };
 
@@ -93,9 +155,11 @@ const MapListeners = ({
     <RegisterBox
       latitude={registerLatitude}
       longitude={registerLongitude}
+      accessibility={registerAccessibility}
       onCancel={onRegisterBoxCancel}
       onLatitudeChanged={onRegisterLatitudeChanged}
       onLongitudeChanged={onRegisterLongitudeChanged}
+      onAccessibilityChanged={onRegisterAccessibilityChanged}
       onConfirm={onRegisterBoxConfirm}
       onSearch={onRegisterSearch}
       searchError={searchError}

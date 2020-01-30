@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// eslint-disable-next-line import/named
+import { useAccessibilities } from '../AccessibilitiesContext';
 import Button from '../Button';
 import Message from '../Message';
+import Select from '../Select';
 import TextField from '../TextField';
 import styles from './RegisterBox.css';
 import CloseIcon from './close.svg';
@@ -10,10 +13,10 @@ import SearchIcon from './search.svg';
 const RegisterBox = ({
   latitude,
   longitude,
+  accessibility,
   onCancel,
   onConfirm,
-  onLatitudeChanged,
-  onLongitudeChanged,
+  onAccessibilityChanged,
   onSearch,
   searchError,
   submitting,
@@ -31,13 +34,11 @@ const RegisterBox = ({
     onSearch();
   };
 
-  const handleLatitudeChanged = ({ target: { value } }) => {
-    onLatitudeChanged(value);
+  const handleAccessibilityChanged = ({ target: { value } }) => {
+    onAccessibilityChanged(value);
   };
 
-  const handleLongitudeChanged = ({ target: { value } }) => {
-    onLongitudeChanged(value);
-  };
+  const accessibilites = useAccessibilities();
 
   return (
     <div className={styles.Wrapper}>
@@ -46,7 +47,7 @@ const RegisterBox = ({
           <h4 className={styles.Title}>Selecione no mapa o novo local de acessibilidade</h4>
           <button
             type="button"
-            disabled={submitting || !latitude || !longitude}
+            disabled={submitting}
             onClick={onCloseClick}
           >
             <img src={CloseIcon} alt="Cancelar registro de localidade" />
@@ -61,8 +62,9 @@ const RegisterBox = ({
                 id="latitude"
                 name="latitude"
                 className={styles.TextField}
-                handleChange={handleLatitudeChanged}
                 value={latitude}
+                disabled
+                readOnly
               />
             </div>
             <div className={styles.Field}>
@@ -72,14 +74,36 @@ const RegisterBox = ({
                 id="longitude"
                 name="longitude"
                 className={styles.TextField}
-                handleChange={handleLongitudeChanged}
                 value={longitude}
+                disabled
+                readOnly
               />
+            </div>
+            <div className={styles.Field}>
+              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+              <label>Tipo:</label>
+              <Select
+                id="accessibility"
+                className={styles.Select}
+                handleChange={handleAccessibilityChanged}
+                value={accessibility}
+                disabled={submitting}
+              >
+                {accessibilites.map(({ id, name }) => (
+                  <option key={id} value={id}>
+                    {name}
+                  </option>
+                ))}
+              </Select>
             </div>
           </div>
           <div className={styles.Search}>
             <button type="submit">
-              <img src={SearchIcon} alt="Buscar por latitude e longitude" />
+              <img
+                src={SearchIcon}
+                alt="Centralizar latitude e longitude no mapa"
+                title="Centralizar latitude e longitude no mapa"
+              />
             </button>
           </div>
         </form>
@@ -103,10 +127,10 @@ const RegisterBox = ({
 RegisterBox.propTypes = {
   latitude: PropTypes.string,
   longitude: PropTypes.string,
+  accessibility: PropTypes.string,
   onCancel: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  onLatitudeChanged: PropTypes.func.isRequired,
-  onLongitudeChanged: PropTypes.func.isRequired,
+  onAccessibilityChanged: PropTypes.func.isRequired,
   onSearch: PropTypes.func.isRequired,
   searchError: PropTypes.bool,
   submitting: PropTypes.bool,
@@ -115,6 +139,7 @@ RegisterBox.propTypes = {
 RegisterBox.defaultProps = {
   latitude: '',
   longitude: '',
+  accessibility: '',
   searchError: false,
   submitting: false,
 };

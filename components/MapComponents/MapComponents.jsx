@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MapListeners from '../MapListeners';
 import Menu from '../Menu';
+import { createMarker } from '../../services/markers';
 
 const MapComponents = () => {
   const [sidebarActive, setSidebarActive] = useState(false);
@@ -24,11 +25,23 @@ const MapComponents = () => {
     setRegistering(false);
   };
 
-  const onConfirmRegister = () => {
+  const onConfirmRegister = async ({
+    latitude,
+    longitude,
+    accessibility,
+  }) => {
     setSubmittingRegister(true);
-    setTimeout(() => {
-      setSubmittingRegister(false);
-    }, 1000);
+
+    await createMarker({
+      lat: latitude,
+      lng: longitude,
+      accessibilityId: accessibility,
+    });
+
+    setSubmittingRegister(false);
+    setRegistering(false);
+
+    return true;
   };
 
   return (

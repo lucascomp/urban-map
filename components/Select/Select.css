@@ -1,0 +1,47 @@
+.Wrapper {
+  position: relative;
+}
+
+.Wrapper::after {
+  content: '';
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  top: 0;
+  z-index: 2;
+  width: 0;
+  height: 0;
+  margin: auto;
+  background: transparent;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 7px solid var(--color-primary);
+}
+
+.Select {
+  width: 100%;
+  height: var(--size-height);
+  padding: 0 5px;
+  border: 1px solid var(--color-default);
+  background: var(--color-white);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  border-radius: var(--border-radius);
+  appearance: none;
+  outline: none;
+}
+
+.disabled {
+  cursor: not-allowed !important;
+  opacity: .5 !important;
+}
+
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+select::-ms-expand {
+  display: none;
+}

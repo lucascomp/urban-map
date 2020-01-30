@@ -1,5 +1,5 @@
 .Wrapper {
-  width: 450px;
+  width: 400px;
   position: absolute;
   bottom: 0;
   right: 0;
@@ -43,13 +43,31 @@
 }
 
 .TextField {
+  width: 180px;
+}
+
+.TextField input:disabled {
+  background-color: white;
+  opacity: 1;
+}
+
+.TextField, .Select {
   margin-left: 15px;
+}
+
+.Select {
+  width: 182px;
 }
 
 .Search {
   display: flex;
+  flex-grow: 1;
   align-items: center;
-  margin-left: 20px;
+  justify-content: center;
+}
+
+.Search img {
+  width: 50px;
 }
 
 @media (max-width: 500px) {
