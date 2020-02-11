@@ -23,7 +23,11 @@ $ yarn
 ```
 
 
-Enfim, rode a aplicação com o comando:
+Com o servidor [urban-map-api](https://github.com/lucascomp/urban-map-api) sendo executado, rode a aplicação com o comando:
 ```
 $ yarn dev
 ```
+
+Você poderá acessar o urban-map-site através do endereço http://localhost:3000
+
+Para acessar a aplicação através de um dispositivo móvel, entre na mesma rede wi-fi, descubra o endereço IP da sua máquina em que a aplicação está sendo executada e acesse este endereço através do dispositivo móvel.
