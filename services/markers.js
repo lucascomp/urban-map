@@ -1,6 +1,28 @@
 import { get, put } from '../utils/request';
+import BeepIcon from '../resources/icons/beep.svg';
+import BrailleIcon from '../resources/icons/braille.svg';
+import LowVisionAccessIcon from '../resources/icons/low-vision-access.svg';
+import SignLanguageIcon from '../resources/icons/sign-language.svg';
+import WheelchairIcon from '../resources/icons/wheelchair.svg';
 
 /* global google */
+
+const getAccessibilityIcon = (id) => {
+  switch (id) {
+    case 1:
+      return BeepIcon;
+    case 2:
+      return BrailleIcon;
+    case 3:
+      return LowVisionAccessIcon;
+    case 4:
+      return SignLanguageIcon;
+    case 5:
+      return WheelchairIcon;
+    default:
+      return undefined;
+  }
+};
 
 export const getMarkers = async (map) => {
   const bounds = map.getBounds();
@@ -33,10 +55,15 @@ export const createMarker = ({
 });
 
 export const drawMarkers = (map, markersPositionToInclude) => markersPositionToInclude.map(({
+  'accessibility.id': accessibilityId,
   id,
   lat,
   lng,
 }) => new google.maps.Marker({
+  icon: {
+    scaledSize: new google.maps.Size(35, 35),
+    url: getAccessibilityIcon(accessibilityId),
+  },
   id,
   map,
   position: { lat, lng },
@@ -45,7 +72,6 @@ export const drawMarkers = (map, markersPositionToInclude) => markersPositionToI
 export const drawRegisterMarker = (map) => new google.maps.Marker({
   map,
   draggable: true,
-  icon: 'http://maps.google.com/mapfiles/kml/paddle/blu-circle.png',
 });
 
 export const cleanMarkers = (markersToExclude) => {
