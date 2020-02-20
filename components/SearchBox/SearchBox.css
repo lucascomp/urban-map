@@ -1,8 +1,5 @@
 .Wrapper {
-  position: absolute;
-  top: 0;
   background-color: white;
-  margin: 8px 0 8px 8px;
   border-radius: 8px 8px 0 0;
   border-bottom: 1px solid #DADCE0;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 -1px 0px rgba(0,0,0,0.02);
@@ -23,10 +20,7 @@
 
 @media (max-width: 500px) {
   .Wrapper {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    border-radius: 0;
+    flex-grow: 1;
   }
 
   .Container {

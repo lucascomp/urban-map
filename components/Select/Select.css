@@ -28,7 +28,6 @@
   font-family: var(--font-family);
   font-size: var(--font-size);
   border-radius: var(--border-radius);
-  appearance: none;
   outline: none;
   text-overflow: ellipsis;
 }

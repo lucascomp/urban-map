@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useGoogleMap } from '@react-google-maps/api';
+import AccessibilityFilter from '../AccessibilityFilter';
 import SearchBox from '../SearchBox';
 import Sidebar from '../Sidebar';
 import redirect from '../../utils/router';
+import styles from './Menu.css';
 
 const Menu = ({
   onMenuClick,
@@ -24,10 +26,13 @@ const Menu = ({
 
   return (
     <>
-      <SearchBox
-        onMenuClick={onMenuClick}
-        onPlaceChanged={onPlaceChanged}
-      />
+      <div className={styles.Wrapper}>
+        <SearchBox
+          onMenuClick={onMenuClick}
+          onPlaceChanged={onPlaceChanged}
+        />
+        <AccessibilityFilter />
+      </div>
       <Sidebar
         active={sidebarActive}
         onLoggedOut={onLoggedOut}

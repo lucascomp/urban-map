@@ -1,0 +1,14 @@
+.Wrapper {
+  display: flex;
+  position: absolute;
+  margin: 8px 0 8px 8px;
+}
+
+@media (max-width: 500px) {
+  .Wrapper {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+  }
+}

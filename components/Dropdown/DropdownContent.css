@@ -1,0 +1,39 @@
+.Wrapper {
+  box-sizing: border-box;
+  position: absolute;
+  top: calc(100% + 12px);
+  z-index: 10;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px 3px color(#fff alpha(7%));
+  background: #fff;
+}
+
+.Wrapper::before {
+  content: '';
+  position: absolute;
+  top: -9px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 9px solid #fff;
+}
+
+.Wrapper.left {
+  left: 0;
+}
+
+.Wrapper.right {
+  right: 0;
+}
+
+.Wrapper.left::before {
+  left: 15px;
+}
+
+.Wrapper.right::before {
+  right: 15px;
+}
+
