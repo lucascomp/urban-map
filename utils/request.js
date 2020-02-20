@@ -3,9 +3,6 @@ import fetch from 'isomorphic-fetch';
 const { SERVICE_URBAN_MAP_API_BASE_URL } = process.env;
 
 const credentials = 'include';
-const headers = {
-  'Content-Type': 'application/json',
-};
 
 const fetchWrapper = async (path, config) => {
   const request = async () => {
@@ -24,30 +21,35 @@ const fetchWrapper = async (path, config) => {
     return res;
   }
 
-  const { message } = await res.json();
-  throw new Error(message);
+  const error = await res.json();
+
+  throw error;
 };
 
-const requestWithBody = async (path, body, method) => {
+const requestWithBody = async (method, path, body, headers) => {
   const config = {
     body: JSON.stringify(body),
     credentials,
-    headers,
+    headers: {
+      'Content-Type': 'application/json',
+      ...headers,
+    },
     method,
   };
 
   return fetchWrapper(path, config);
 };
 
-export const get = async (path) => {
+export const get = async (path, headers) => {
   const config = {
     credentials,
     method: 'GET',
+    headers,
   };
 
   return fetchWrapper(path, config);
 };
 
-export const post = (path, body) => requestWithBody(path, body, 'POST');
+export const post = (path, body, headers) => requestWithBody('POST', path, body, headers);
 
-export const put = (path, body) => requestWithBody(path, body, 'PUT');
+export const put = (path, body, headers) => requestWithBody('PUT', path, body, headers);

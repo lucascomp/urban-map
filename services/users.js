@@ -32,11 +32,11 @@ export const loginWithGoogle = () => {
   loginWithProvider({ provider });
 };
 
-export const logout = async () => {
+export const logout = async ({ cookie }) => {
   const path = '/logout';
 
   try {
-    const res = await get(path);
+    const res = await get(path, { cookie });
 
     if (!res.ok) {
       const message = await res.text();
