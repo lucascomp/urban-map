@@ -16,10 +16,12 @@ const DropdownContent = ({ children, className, variant }) => {
 DropdownContent.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  variant: PropTypes.string,
 };
 
 DropdownContent.defaultProps = {
   className: null,
+  variant: 'right',
 };
 
 export default DropdownContent;
