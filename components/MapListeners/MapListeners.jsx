@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { useGoogleMap } from '@react-google-maps/api';
 import RegisterBox from '../RegisterBox';
 import {
-  getMarkers,
+  cleanMarkers,
   drawMarkers,
   drawRegisterMarker,
-  cleanMarkers,
+  getMarkers,
+  filterMarkers,
   removeListener,
 } from '../../services/markers';
 import { arrayDiff, arrayIntersection } from '../../utils/array';
@@ -15,6 +16,7 @@ import { markerComparator } from '../../utils/marker';
 let registerMarker = null;
 
 const MapListeners = ({
+  accessibilitiesFilter,
   onCancelRegister,
   onConfirmRegister,
   registering,
@@ -26,6 +28,8 @@ const MapListeners = ({
   const [registerAccessibility, setRegisterAccessibility] = useState('1');
   const [searchError, setSearchError] = useState(false);
   const map = useGoogleMap();
+
+  filterMarkers(map, markers, accessibilitiesFilter);
 
   const clearRegisterMarker = () => {
     if (registerMarker) {
@@ -40,6 +44,8 @@ const MapListeners = ({
     setRegisterLongitude('');
     setRegisterAccessibility('1');
   };
+
+
 
   useEffect(() => {
     const idleListener = map.addListener('idle', async () => {
@@ -169,6 +175,11 @@ const MapListeners = ({
 };
 
 MapListeners.propTypes = {
+  accessibilitiesFilter: PropTypes.arrayOf(PropTypes.shape({
+    checked: PropTypes.bool,
+    id: PropTypes.number,
+    name: PropTypes.string,
+  })).isRequired,
   onCancelRegister: PropTypes.func.isRequired,
   onConfirmRegister: PropTypes.func.isRequired,
   registering: PropTypes.bool,

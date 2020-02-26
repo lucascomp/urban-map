@@ -1,0 +1,36 @@
+.Checkbox {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.Label {
+  margin-left: 8px;
+}
+
+.Input {
+  box-sizing: border-box;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+  border-radius: 5px;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.Input::after {
+  content: '';
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 25%;
+  height: 50%;
+  margin: -40% 0 0 -14%;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}

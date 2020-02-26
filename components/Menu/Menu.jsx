@@ -8,6 +8,8 @@ import redirect from '../../utils/router';
 import styles from './Menu.css';
 
 const Menu = ({
+  accessibilitiesFilter,
+  onAccessibilitiesFilterChange,
   onMenuClick,
   onRegisterAccessibilityClick,
   onSidebarRequestClose,
@@ -31,7 +33,10 @@ const Menu = ({
           onMenuClick={onMenuClick}
           onPlaceChanged={onPlaceChanged}
         />
-        <AccessibilityFilter />
+        <AccessibilityFilter
+          accessibilities={accessibilitiesFilter}
+          onAccessibilitiesChange={onAccessibilitiesFilterChange}
+        />
       </div>
       <Sidebar
         active={sidebarActive}
@@ -44,6 +49,12 @@ const Menu = ({
 };
 
 Menu.propTypes = {
+  accessibilitiesFilter: PropTypes.arrayOf(PropTypes.shape({
+    checked: PropTypes.bool,
+    id: PropTypes.number,
+    name: PropTypes.string,
+  })).isRequired,
+  onAccessibilitiesFilterChange: PropTypes.func.isRequired,
   onMenuClick: PropTypes.func.isRequired,
   onRegisterAccessibilityClick: PropTypes.func.isRequired,
   onSidebarRequestClose: PropTypes.func.isRequired,

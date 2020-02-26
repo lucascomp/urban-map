@@ -12,3 +12,18 @@
 .Content {
   width: 200px;
 }
+
+.Item {
+  list-style-type: none;
+  user-select: none;
+}
+
+.Item + .Item {
+  margin-top: 5px;
+}
+
+@media (max-width: 500px) {
+  .Content {
+    right: 4px !important;
+  }
+}

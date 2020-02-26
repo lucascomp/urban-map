@@ -10,15 +10,15 @@ import WheelchairIcon from '../resources/icons/wheelchair.svg';
 const getAccessibilityIcon = (id) => {
   switch (id) {
     case 1:
-      return BeepIcon;
+      return WheelchairIcon;
     case 2:
-      return BrailleIcon;
+      return BeepIcon;
     case 3:
       return LowVisionAccessIcon;
     case 4:
       return SignLanguageIcon;
     case 5:
-      return WheelchairIcon;
+      return BrailleIcon;
     default:
       return undefined;
   }
@@ -60,6 +60,7 @@ export const drawMarkers = (map, markersPositionToInclude) => markersPositionToI
   lat,
   lng,
 }) => new google.maps.Marker({
+  accessibilityId,
   icon: {
     scaledSize: new google.maps.Size(35, 35),
     url: getAccessibilityIcon(accessibilityId),
@@ -80,4 +81,16 @@ export const cleanMarkers = (markersToExclude) => {
 
 export const removeListener = (listener) => {
   google.maps.event.removeListener(listener);
+};
+
+export const filterMarkers = (map, markers, accessbilitiesFilter) => {
+  markers.forEach((marker) => {
+    const { checked } = accessbilitiesFilter.find(({ id }) => marker.accessibilityId === id);
+
+    if (checked) {
+      marker.setMap(map);
+    } else {
+      marker.setMap(null);
+    }
+  });
 };
