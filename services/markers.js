@@ -7,6 +7,8 @@ import WheelchairIcon from '../resources/icons/wheelchair.svg';
 
 /* global google */
 
+let infoWindow;
+
 const getAccessibilityIcon = (id) => {
   switch (id) {
     case 1:
@@ -45,11 +47,13 @@ export const getMarkers = async (map) => {
 export const createMarker = ({
   lat,
   lng,
+  description,
   userId,
   accessibilityId,
 }) => put('/markers', {
   lat,
   lng,
+  description,
   userId,
   accessibilityId,
 });
@@ -59,16 +63,35 @@ export const drawMarkers = (map, markersPositionToInclude) => markersPositionToI
   id,
   lat,
   lng,
-}) => new google.maps.Marker({
-  accessibilityId,
-  icon: {
-    scaledSize: new google.maps.Size(35, 35),
-    url: getAccessibilityIcon(accessibilityId),
-  },
-  id,
-  map,
-  position: { lat, lng },
-}));
+  description,
+}) => {
+  const marker = new google.maps.Marker({
+    accessibilityId,
+    icon: {
+      scaledSize: new google.maps.Size(35, 35),
+      url: getAccessibilityIcon(accessibilityId),
+    },
+    id,
+    map,
+    position: { lat, lng },
+  });
+
+  marker.addListener('click', () => {
+    if (infoWindow) {
+      infoWindow.close();
+      infoWindow.setContent(description);
+    } else {
+      infoWindow = new google.maps.InfoWindow({
+        content: description,
+        maxWidth: 200,
+      });
+    }
+
+    infoWindow.open(map, marker);
+  });
+
+  return marker;
+});
 
 export const drawRegisterMarker = (map) => new google.maps.Marker({
   map,

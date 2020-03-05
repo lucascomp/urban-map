@@ -32,7 +32,7 @@ export const loginWithGoogle = () => {
   loginWithProvider({ provider });
 };
 
-export const logout = async ({ cookie }) => {
+export const logout = async ({ cookie } = {}) => {
   const path = '/logout';
 
   try {

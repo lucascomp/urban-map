@@ -41,6 +41,7 @@ const MapComponents = () => {
   const onConfirmRegister = async ({
     latitude,
     longitude,
+    description,
     accessibility,
   }) => {
     setSubmittingRegister(true);
@@ -48,6 +49,7 @@ const MapComponents = () => {
     await createMarker({
       lat: latitude,
       lng: longitude,
+      description,
       accessibilityId: accessibility,
     });
 

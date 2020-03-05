@@ -1,5 +1,5 @@
 .Wrapper {
-  width: 400px;
+  width: 360px;
   position: absolute;
   bottom: 0;
   right: 0;
@@ -33,14 +33,28 @@
 
 .Form {
   display: flex;
+  flex-direction: column;
   font-size: 14px;
+}
+
+.LatLngAndSearchWrapper {
+  display: flex;
+}
+
+.LatLngWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.Label {
+  width: 80px;
 }
 
 .Field {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin: 20px 0;
+  box-sizing: border-box;
+  margin: 8px 0;
 }
 
 .TextField {
@@ -58,6 +72,15 @@
 
 .Select {
   width: 182px;
+}
+
+.TextArea {
+  border-radius: 5px;
+  font-family: var(--font-family);
+  height: 100px;
+  margin-left: 15px;
+  outline: none;
+  width: 240px;
 }
 
 .Search {

@@ -13,9 +13,11 @@ import SearchIcon from './search.svg';
 const RegisterBox = ({
   latitude,
   longitude,
+  description,
   accessibility,
   onCancel,
   onConfirm,
+  onDescriptionChanged,
   onAccessibilityChanged,
   onSearch,
   searchError,
@@ -38,6 +40,10 @@ const RegisterBox = ({
     onAccessibilityChanged(value);
   };
 
+  const handleDescriptionChanged = ({ target: { value } }) => {
+    onDescriptionChanged(value);
+  }
+
   const accessibilites = useAccessibilities();
 
   return (
@@ -54,57 +60,71 @@ const RegisterBox = ({
           </button>
         </div>
         <form className={styles.Form} onSubmit={onFormSubmit}>
-          <div>
-            <div className={styles.Field}>
-              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-              <label htmlFor="latitude">Latitude:</label>
-              <TextField
-                id="latitude"
-                name="latitude"
-                className={styles.TextField}
-                value={latitude}
-                disabled
-                readOnly
-              />
+          <div className={styles.LatLngAndSearchWrapper}>
+            <div className={styles.LatLngWrapper}>
+              <div className={styles.Field}>
+                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                <label className={styles.Label} htmlFor="latitude">Latitude:</label>
+                <TextField
+                  id="latitude"
+                  name="latitude"
+                  className={styles.TextField}
+                  value={latitude}
+                  disabled
+                  readOnly
+                />
+              </div>
+              <div className={styles.Field}>
+                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                <label className={styles.Label} htmlFor="longitude">Longitude:</label>
+                <TextField
+                  id="longitude"
+                  name="longitude"
+                  className={styles.TextField}
+                  value={longitude}
+                  disabled
+                  readOnly
+                />
+              </div>
             </div>
-            <div className={styles.Field}>
-              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-              <label htmlFor="longitude">Longitude:</label>
-              <TextField
-                id="longitude"
-                name="longitude"
-                className={styles.TextField}
-                value={longitude}
-                disabled
-                readOnly
-              />
-            </div>
-            <div className={styles.Field}>
-              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-              <label>Tipo:</label>
-              <Select
-                id="accessibility"
-                className={styles.Select}
-                handleChange={handleAccessibilityChanged}
-                value={accessibility}
-                disabled={submitting}
-              >
-                {accessibilites.map(({ id, name }) => (
-                  <option key={id} value={id}>
-                    {name}
-                  </option>
-                ))}
-              </Select>
+            <div className={styles.Search}>
+              <button type="submit">
+                <img
+                  src={SearchIcon}
+                  alt="Centralizar latitude e longitude no mapa"
+                  title="Centralizar latitude e longitude no mapa"
+                />
+              </button>
             </div>
           </div>
-          <div className={styles.Search}>
-            <button type="submit">
-              <img
-                src={SearchIcon}
-                alt="Centralizar latitude e longitude no mapa"
-                title="Centralizar latitude e longitude no mapa"
-              />
-            </button>
+          <div className={styles.Field}>
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label className={styles.Label}>Tipo:</label>
+            <Select
+              id="accessibility"
+              className={styles.Select}
+              handleChange={handleAccessibilityChanged}
+              value={accessibility}
+              disabled={submitting}
+            >
+              {accessibilites.map(({ id, name }) => (
+                <option key={id} value={id}>
+                  {name}
+                </option>
+              ))}
+            </Select>
+          </div>
+          <div className={styles.Field}>
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label className={styles.Label}>Descrição:</label>
+            <textarea
+              className={styles.TextArea}
+              id="description"
+              disabled={submitting}
+              onChange={handleDescriptionChanged}
+              maxLength={500}
+              value={description}
+            />
           </div>
         </form>
         {searchError && (

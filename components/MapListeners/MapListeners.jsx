@@ -25,6 +25,7 @@ const MapListeners = ({
   const [markers, setMarkers] = useState([]);
   const [registerLatitude, setRegisterLatitude] = useState('');
   const [registerLongitude, setRegisterLongitude] = useState('');
+  const [registerDescription, setRegisterDescription] = useState('');
   const [registerAccessibility, setRegisterAccessibility] = useState('1');
   const [searchError, setSearchError] = useState(false);
   const map = useGoogleMap();
@@ -42,10 +43,9 @@ const MapListeners = ({
     clearRegisterMarker();
     setRegisterLatitude('');
     setRegisterLongitude('');
+    setRegisterDescription('');
     setRegisterAccessibility('1');
   };
-
-
 
   useEffect(() => {
     const idleListener = map.addListener('idle', async () => {
@@ -116,6 +116,7 @@ const MapListeners = ({
     const successfullyRegistered = await onConfirmRegister({
       latitude: registerLatitude,
       longitude: registerLongitude,
+      description: registerDescription,
       accessibility: registerAccessibility,
     });
 
@@ -129,13 +130,8 @@ const MapListeners = ({
     clearRegisters();
   };
 
-  const onRegisterLatitudeChanged = (latitude) => {
-    setRegisterLatitude(latitude);
-    setSearchError(false);
-  };
-
-  const onRegisterLongitudeChanged = (longitude) => {
-    setRegisterLongitude(longitude);
+  const onRegisterDescriptionChanged = (description) => {
+    setRegisterDescription(description);
     setSearchError(false);
   };
 
@@ -161,10 +157,10 @@ const MapListeners = ({
     <RegisterBox
       latitude={registerLatitude}
       longitude={registerLongitude}
+      description={registerDescription}
       accessibility={registerAccessibility}
       onCancel={onRegisterBoxCancel}
-      onLatitudeChanged={onRegisterLatitudeChanged}
-      onLongitudeChanged={onRegisterLongitudeChanged}
+      onDescriptionChanged={onRegisterDescriptionChanged}
       onAccessibilityChanged={onRegisterAccessibilityChanged}
       onConfirm={onRegisterBoxConfirm}
       onSearch={onRegisterSearch}
