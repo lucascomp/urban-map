@@ -60,6 +60,7 @@ export const createMarker = ({
 
 export const drawMarkers = (map, markersPositionToInclude) => markersPositionToInclude.map(({
   'accessibility.id': accessibilityId,
+  'accessibility.name': accessibilityName,
   id,
   lat,
   lng,
@@ -76,14 +77,25 @@ export const drawMarkers = (map, markersPositionToInclude) => markersPositionToI
     position: { lat, lng },
   });
 
+  const infoWindowContent = `
+    <div>
+      <h4>${accessibilityName}</h4>
+    </div>
+    ${description ? `
+      <div style="margin-top: 8px;">
+        <p>${description}</p>
+      </div>
+    ` : ''}
+  `;
+
   marker.addListener('click', () => {
     if (infoWindow) {
       infoWindow.close();
-      infoWindow.setContent(description);
+      infoWindow.setContent(infoWindowContent);
     } else {
       infoWindow = new google.maps.InfoWindow({
-        content: description,
-        maxWidth: 200,
+        content: infoWindowContent,
+        maxWidth: 250,
       });
     }
 

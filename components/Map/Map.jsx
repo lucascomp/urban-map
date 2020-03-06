@@ -2,7 +2,10 @@ import React from 'react';
 import { GoogleMap, LoadScriptNext } from '@react-google-maps/api';
 import MapComponents from '../MapComponents/MapComponents';
 
+/* global google, navigator */
+
 const { GOOGLE_MAPS_API_KEY } = process.env;
+let userMarker;
 
 const Map = () => {
   const center = { lat: -22.906955, lng: -43.186902 };
@@ -11,7 +14,7 @@ const Map = () => {
   const options = {
     fullscreenControl: false,
     mapTypeControl: false,
-    minZoom: 16,
+    minZoom: 14,
     streetViewControl: false,
     styles: [
       {
@@ -51,7 +54,29 @@ const Map = () => {
     ],
     zoomControl: false,
   };
-  const zoom = 16;
+  const zoom = 15;
+
+  const onLoad = (map) => {
+    navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
+      map.panTo({
+        lat: latitude,
+        lng: longitude,
+      });
+    });
+
+    navigator.geolocation.watchPosition(({ coords: { latitude, longitude } }) => {
+      if (!userMarker) {
+        userMarker = new google.maps.Marker({
+          map,
+        });
+      }
+
+      userMarker.setPosition({
+        lat: latitude,
+        lng: longitude,
+      });
+    });
+  };
 
   return (
     <LoadScriptNext
@@ -61,6 +86,7 @@ const Map = () => {
       <GoogleMap
         center={center}
         mapContainerStyle={mapContainerStyle}
+        onLoad={onLoad}
         options={options}
         zoom={zoom}
       >

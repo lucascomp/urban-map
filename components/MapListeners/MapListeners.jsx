@@ -12,6 +12,7 @@ import {
 } from '../../services/markers';
 import { arrayDiff, arrayIntersection } from '../../utils/array';
 import { markerComparator } from '../../utils/marker';
+import redirect from '../../utils/router';
 
 let registerMarker = null;
 
@@ -49,20 +50,23 @@ const MapListeners = ({
 
   useEffect(() => {
     const idleListener = map.addListener('idle', async () => {
-      const newMarkersPosition = await getMarkers(map);
+      try {
+        const newMarkersPosition = await getMarkers(map);
+        const markersPositionToInclude = arrayDiff(newMarkersPosition, markers, markerComparator);
+        const markersToExclude = arrayDiff(markers, newMarkersPosition, markerComparator);
 
-      const markersPositionToInclude = arrayDiff(newMarkersPosition, markers, markerComparator);
-      const markersToExclude = arrayDiff(markers, newMarkersPosition, markerComparator);
+        if (markersPositionToInclude.length === 0 && markersToExclude.length === 0) {
+          return;
+        }
 
-      if (markersPositionToInclude.length === 0 && markersToExclude.length === 0) {
-        return;
+        const markersToKeep = arrayIntersection(markers, newMarkersPosition, markerComparator);
+        const newMarkers = drawMarkers(map, markersPositionToInclude);
+
+        cleanMarkers(markersToExclude);
+        setMarkers([...markersToKeep, ...newMarkers]);
+      } catch (e) {
+        redirect('/login');
       }
-
-      const markersToKeep = arrayIntersection(markers, newMarkersPosition, markerComparator);
-      const newMarkers = drawMarkers(map, markersPositionToInclude);
-
-      cleanMarkers(markersToExclude);
-      setMarkers([...markersToKeep, ...newMarkers]);
     });
 
     return () => removeListener(idleListener);
