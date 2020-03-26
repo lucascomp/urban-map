@@ -60,43 +60,6 @@ const RegisterBox = ({
           </button>
         </div>
         <form className={styles.Form} onSubmit={onFormSubmit}>
-          <div className={styles.LatLngAndSearchWrapper}>
-            <div className={styles.LatLngWrapper}>
-              <div className={styles.Field}>
-                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                <label className={styles.Label} htmlFor="latitude">Latitude:</label>
-                <TextField
-                  id="latitude"
-                  name="latitude"
-                  className={styles.TextField}
-                  value={latitude}
-                  disabled
-                  readOnly
-                />
-              </div>
-              <div className={styles.Field}>
-                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                <label className={styles.Label} htmlFor="longitude">Longitude:</label>
-                <TextField
-                  id="longitude"
-                  name="longitude"
-                  className={styles.TextField}
-                  value={longitude}
-                  disabled
-                  readOnly
-                />
-              </div>
-            </div>
-            <div className={styles.Search}>
-              <button type="submit">
-                <img
-                  src={SearchIcon}
-                  alt="Centralizar latitude e longitude no mapa"
-                  title="Centralizar latitude e longitude no mapa"
-                />
-              </button>
-            </div>
-          </div>
           <div className={styles.Field}>
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label className={styles.Label}>Tipo:</label>

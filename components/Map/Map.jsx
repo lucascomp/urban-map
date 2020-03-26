@@ -1,6 +1,7 @@
 import React from 'react';
 import { GoogleMap, LoadScriptNext } from '@react-google-maps/api';
 import MapComponents from '../MapComponents/MapComponents';
+import circleIcon from './circle.svg';
 
 /* global google, navigator */
 
@@ -68,6 +69,8 @@ const Map = () => {
       if (!userMarker) {
         userMarker = new google.maps.Marker({
           map,
+          icon: circleIcon,
+          animation: google.maps.Animation.DROP,
         });
       }
 

@@ -77,7 +77,7 @@
 .TextArea {
   border-radius: 5px;
   font-family: var(--font-family);
-  height: 100px;
+  height: 60px;
   margin-left: 15px;
   outline: none;
   width: 240px;
