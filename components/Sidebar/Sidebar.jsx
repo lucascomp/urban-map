@@ -38,7 +38,7 @@ const Sidebar = ({
         </div>
         <ul className={styles.Widget}>
           <li className={styles.Item}>
-            <button onClick={onRegisterAccessibilityClick} type="button">Cadastrar Acessibilidade</button>
+            <button onClick={onRegisterAccessibilityClick} type="button">Cadastrar indicativo de acessiblidade</button>
           </li>
           <li className={styles.Item}>
             <button onClick={onLogoutClick} type="button">Logout</button>
