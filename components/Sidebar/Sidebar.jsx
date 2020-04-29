@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { useUser } from '../UserContext';
 import { logout } from '../../services/users';
 import BackwardIcon from './backward.svg';
 import styles from './Sidebar.css';
@@ -9,8 +10,11 @@ const Sidebar = ({
   onRequestClose,
   onLoggedOut,
   onRegisterAccessibilityClick,
+  onRegisterAdminClick,
   active,
 }) => {
+  const { admin } = useUser();
+
   const sidebarClassName = classNames(
     styles.Sidebar, {
       [styles.active]: active,
@@ -37,6 +41,11 @@ const Sidebar = ({
           </button>
         </div>
         <ul className={styles.Widget}>
+          {admin && (
+            <li className={styles.Item}>
+              <button onClick={onRegisterAdminClick} type="button">Cadastrar administrador</button>
+            </li>
+          )}
           <li className={styles.Item}>
             <button onClick={onRegisterAccessibilityClick} type="button">Cadastrar indicativo de acessiblidade</button>
           </li>
@@ -54,6 +63,7 @@ Sidebar.propTypes = {
   onRequestClose: PropTypes.func.isRequired,
   onLoggedOut: PropTypes.func.isRequired,
   onRegisterAccessibilityClick: PropTypes.func.isRequired,
+  onRegisterAdminClick: PropTypes.func.isRequired,
 };
 
 Sidebar.defaultProps = {

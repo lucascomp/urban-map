@@ -5,10 +5,8 @@ import { useAccessibilities } from '../AccessibilitiesContext';
 import Button from '../Button';
 import Message from '../Message';
 import Select from '../Select';
-import TextField from '../TextField';
 import styles from './RegisterBox.css';
 import CloseIcon from './close.svg';
-import SearchIcon from './search.svg';
 
 const RegisterBox = ({
   latitude,
@@ -42,7 +40,7 @@ const RegisterBox = ({
 
   const handleDescriptionChanged = ({ target: { value } }) => {
     onDescriptionChanged(value);
-  }
+  };
 
   const accessibilites = useAccessibilities();
 
@@ -110,9 +108,11 @@ const RegisterBox = ({
 RegisterBox.propTypes = {
   latitude: PropTypes.string,
   longitude: PropTypes.string,
+  description: PropTypes.string,
   accessibility: PropTypes.string,
   onCancel: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
+  onDescriptionChanged: PropTypes.func.isRequired,
   onAccessibilityChanged: PropTypes.func.isRequired,
   onSearch: PropTypes.func.isRequired,
   searchError: PropTypes.bool,
@@ -122,6 +122,7 @@ RegisterBox.propTypes = {
 RegisterBox.defaultProps = {
   latitude: '',
   longitude: '',
+  description: '',
   accessibility: '',
   searchError: false,
   submitting: false,

@@ -3,6 +3,7 @@ import { useAccessibilities } from '../AccessibilitiesContext';
 import MapListeners from '../MapListeners';
 import Menu from '../Menu';
 import { createMarker } from '../../services/markers';
+import redirect from '../../utils/router';
 
 const MapComponents = () => {
   const [sidebarActive, setSidebarActive] = useState(false);
@@ -28,6 +29,10 @@ const MapComponents = () => {
   const onRegisterAccessibilityClick = () => {
     setSidebarActive(false);
     setRegistering(true);
+  };
+
+  const onRegisterAdminClick = () => {
+    redirect('/register-admin');
   };
 
   const onSidebarRequestClose = () => {
@@ -73,6 +78,7 @@ const MapComponents = () => {
         onAccessibilitiesFilterChange={onAccessibilitiesFilterChange}
         onMenuClick={onMenuClick}
         onRegisterAccessibilityClick={onRegisterAccessibilityClick}
+        onRegisterAdminClick={onRegisterAdminClick}
         onSidebarRequestClose={onSidebarRequestClose}
         sidebarActive={sidebarActive}
       />

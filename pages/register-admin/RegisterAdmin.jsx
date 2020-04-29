@@ -2,35 +2,38 @@ import React from 'react';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 import { asPrivate } from '../../components/Auth';
-import AccessibilitiesContext from '../../components/AccessibilitiesContext';
-import Map from '../../components/Map';
+import RegisterAdminPanel from '../../components/RegisterAdminPanel';
 import UserContext from '../../components/UserContext';
-import { getAccessibilities } from '../../services/accessibilities';
 import { getUser } from '../../services/users';
 import { forceClearSession, getCookie } from '../../utils/auth';
 import redirect from '../../utils/router';
+import styles from './RegisterAdmin.css';
 
-const Home = ({ accessibilities, user }) => (
-  <div>
+const RegisterAdmin = ({ user }) => (
+  <>
     <Head>
-      <title>Home | Mapa de Acessibilide Urbana</title>
+      <title>Cadastre-se | Mapa de Acessibilide Urbana</title>
     </Head>
-    <UserContext.Provider value={user}>
-      <AccessibilitiesContext.Provider value={accessibilities}>
-        <Map />
-      </AccessibilitiesContext.Provider>
-    </UserContext.Provider>
-  </div>
+    <div className={styles.Wrapper}>
+      <UserContext.Provider value={user}>
+        <RegisterAdminPanel />
+      </UserContext.Provider>
+    </div>
+  </>
 );
 
-Home.getInitialProps = async (ctx) => {
+RegisterAdmin.getInitialProps = async (ctx) => {
   const cookie = getCookie(ctx);
 
   try {
-    const accessibilities = await getAccessibilities({ cookie });
     const user = await getUser({ cookie });
 
-    return { accessibilities, user };
+    if (!user.admin) {
+      redirect('/home', ctx);
+      return {};
+    }
+
+    return { user };
   } catch ({ status }) {
     if (status === 401) {
       forceClearSession(ctx);
@@ -43,11 +46,7 @@ Home.getInitialProps = async (ctx) => {
   }
 };
 
-Home.propTypes = {
-  accessibilities: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-  })).isRequired,
+RegisterAdmin.propTypes = {
   user: PropTypes.shape({
     admin: PropTypes.bool,
     email: PropTypes.string,
@@ -56,4 +55,4 @@ Home.propTypes = {
   }).isRequired,
 };
 
-export default asPrivate()(Home);
+export default asPrivate()(RegisterAdmin);

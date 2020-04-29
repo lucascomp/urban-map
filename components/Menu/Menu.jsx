@@ -12,6 +12,7 @@ const Menu = ({
   onAccessibilitiesFilterChange,
   onMenuClick,
   onRegisterAccessibilityClick,
+  onRegisterAdminClick,
   onSidebarRequestClose,
   sidebarActive,
 }) => {
@@ -42,6 +43,7 @@ const Menu = ({
         active={sidebarActive}
         onLoggedOut={onLoggedOut}
         onRegisterAccessibilityClick={onRegisterAccessibilityClick}
+        onRegisterAdminClick={onRegisterAdminClick}
         onRequestClose={onSidebarRequestClose}
       />
     </>
@@ -57,6 +59,7 @@ Menu.propTypes = {
   onAccessibilitiesFilterChange: PropTypes.func.isRequired,
   onMenuClick: PropTypes.func.isRequired,
   onRegisterAccessibilityClick: PropTypes.func.isRequired,
+  onRegisterAdminClick: PropTypes.func.isRequired,
   onSidebarRequestClose: PropTypes.func.isRequired,
   sidebarActive: PropTypes.bool,
 };

@@ -10,6 +10,12 @@ export const forgotPassword = ({ email }) => {
   return post(path, { email });
 };
 
+export const getUser = async ({ cookie } = {}) => {
+  const response = await get('/user', { cookie });
+
+  return response.json();
+};
+
 export const login = ({ email, password }) => {
   const path = '/login';
 
@@ -46,6 +52,18 @@ export const logout = async ({ cookie } = {}) => {
     forceClearSession();
   }
 };
+
+export const registerAdmin = ({
+  email,
+  firstName,
+  lastName,
+  password,
+}) => post('/register-admin', {
+  email,
+  firstName,
+  lastName,
+  password,
+});
 
 export const resetPassword = ({ token, password }) => {
   const path = '/reset-password';

@@ -1,0 +1,34 @@
+.NameWrapper, .PasswordWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -6px -7.5px 6px -7.5px;
+}
+
+.FirstName,
+.LastName,
+.Password,
+.ConfirmPassword {
+  flex: 1;
+  margin: 6px 7.5px;
+}
+
+.Email {
+  margin-bottom: 12px;
+}
+
+.FormActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: stretch;
+  align-items: center;
+}
+
+.MapLink,
+.SubmitButtonWrapper {
+  flex: 1;
+}
+
+.MapLink {
+  font-size: 14px;
+  color: var(--color-primary);
+}
