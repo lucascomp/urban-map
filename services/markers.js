@@ -1,4 +1,4 @@
-import { get, put } from '../utils/request';
+import { get, post, put } from '../utils/request';
 import BeepIcon from '../resources/icons/beep.svg';
 import BrailleIcon from '../resources/icons/braille.svg';
 import LowVisionAccessIcon from '../resources/icons/low-vision-access.svg';
@@ -58,7 +58,27 @@ export const createMarker = ({
   accessibilityId,
 });
 
-export const drawMarkers = (map, markersPositionToInclude) => markersPositionToInclude.map(({
+export const editMarker = ({
+  id,
+  lat,
+  lng,
+  description,
+  userId,
+  accessibilityId,
+}) => post('/markers', {
+  id,
+  lat,
+  lng,
+  description,
+  userId,
+  accessibilityId,
+});
+
+export const drawMarkers = (
+  map,
+  markersPositionToInclude,
+  onEdit,
+) => markersPositionToInclude.map(({
   'accessibility.id': accessibilityId,
   'accessibility.name': accessibilityName,
   id,
@@ -68,6 +88,7 @@ export const drawMarkers = (map, markersPositionToInclude) => markersPositionToI
 }) => {
   const marker = new google.maps.Marker({
     accessibilityId,
+    description,
     icon: {
       scaledSize: new google.maps.Size(35, 35),
       url: getAccessibilityIcon(accessibilityId),
@@ -77,18 +98,18 @@ export const drawMarkers = (map, markersPositionToInclude) => markersPositionToI
     position: { lat, lng },
   });
 
-  const infoWindowContent = `
-    <div>
-      <h4>${accessibilityName}</h4>
-    </div>
-    ${description ? `
-      <div style="margin-top: 8px;">
-        <p>${description}</p>
-      </div>
-    ` : ''}
-  `;
-
   marker.addListener('click', () => {
+    const infoWindowContent = `
+      <div>
+        <h4>${accessibilityName}</h4>
+      </div>
+      ${description ? `
+        <div style="margin-top: 8px;">
+          <p>${description}</p>
+        </div>
+      ` : ''}
+    `;
+
     if (infoWindow) {
       infoWindow.close();
       infoWindow.setContent(infoWindowContent);
@@ -100,6 +121,10 @@ export const drawMarkers = (map, markersPositionToInclude) => markersPositionToI
     }
 
     infoWindow.open(map, marker);
+  });
+
+  marker.addListener('rightclick', () => {
+    onEdit(marker);
   });
 
   return marker;

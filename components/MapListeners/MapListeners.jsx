@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useGoogleMap } from '@react-google-maps/api';
 import RegisterBox from '../RegisterBox';
+import { useUser } from '../UserContext';
 import {
   cleanMarkers,
   drawMarkers,
@@ -18,8 +19,10 @@ let registerMarker = null;
 
 const MapListeners = ({
   accessibilitiesFilter,
+  editing,
   onCancelRegister,
   onConfirmRegister,
+  onEditClick: onEditClickProp,
   registering,
   submittingRegister,
 }) => {
@@ -30,6 +33,7 @@ const MapListeners = ({
   const [registerAccessibility, setRegisterAccessibility] = useState('1');
   const [searchError, setSearchError] = useState(false);
   const map = useGoogleMap();
+  const { admin } = useUser();
 
   filterMarkers(map, markers, accessibilitiesFilter);
 
@@ -42,10 +46,51 @@ const MapListeners = ({
 
   const clearRegisters = () => {
     clearRegisterMarker();
+    setRegisterAccessibility('1');
+    setRegisterDescription('');
     setRegisterLatitude('');
     setRegisterLongitude('');
-    setRegisterDescription('');
-    setRegisterAccessibility('1');
+  };
+
+  const fixLatLng = (value) => value.toFixed(6);
+
+  const setRegisterLatitudeFixed = (lat) => {
+    const fixedLat = fixLatLng(lat);
+    setRegisterLatitude(fixedLat);
+  };
+
+  const setRegisterLongitudeFixed = (lng) => {
+    const fixedLng = fixLatLng(lng);
+    setRegisterLongitude(fixedLng);
+  };
+
+  const updateLatLng = ({ latLng }) => {
+    setRegisterLatitudeFixed(latLng.lat());
+    setRegisterLongitudeFixed(latLng.lng());
+  };
+
+  const onEditClick = (marker) => {
+    if (!admin) {
+      return;
+    }
+
+    const {
+      accessibilityId,
+      description,
+      position,
+    } = marker;
+
+    setRegisterAccessibility(accessibilityId.toString());
+    setRegisterDescription(description.toString());
+    setRegisterLatitude(position.lat().toString());
+    setRegisterLongitude(position.lng().toString());
+
+    registerMarker = marker;
+
+    registerMarker.setDraggable(true);
+    registerMarker.addListener('drag', updateLatLng);
+
+    onEditClickProp(registerMarker);
   };
 
   useEffect(() => {
@@ -60,7 +105,7 @@ const MapListeners = ({
         }
 
         const markersToKeep = arrayIntersection(markers, newMarkersPosition, markerComparator);
-        const newMarkers = drawMarkers(map, markersPositionToInclude);
+        const newMarkers = drawMarkers(map, markersPositionToInclude, onEditClick);
 
         cleanMarkers(markersToExclude);
         setMarkers([...markersToKeep, ...newMarkers]);
@@ -73,23 +118,6 @@ const MapListeners = ({
   });
 
   useEffect(() => {
-    const fixLatLng = (value) => value.toFixed(6);
-
-    const setRegisterLatitudeFixed = (lat) => {
-      const fixedLat = fixLatLng(lat);
-      setRegisterLatitude(fixedLat);
-    };
-
-    const setRegisterLongitudeFixed = (lng) => {
-      const fixedLng = fixLatLng(lng);
-      setRegisterLongitude(fixedLng);
-    };
-
-    const updateLatLng = ({ latLng }) => {
-      setRegisterLatitudeFixed(latLng.lat());
-      setRegisterLongitudeFixed(latLng.lng());
-    };
-
     const clickListener = map.addListener('click', async ({ latLng }) => {
       if (!registering) {
         return;
@@ -117,19 +145,17 @@ const MapListeners = ({
   };
 
   const onRegisterBoxConfirm = async () => {
-    const successfullyRegistered = await onConfirmRegister({
+    await onConfirmRegister({
       latitude: registerLatitude,
       longitude: registerLongitude,
       description: registerDescription,
       accessibility: registerAccessibility,
     });
 
-    if (successfullyRegistered) {
-      map.panTo({
-        lat: parseFloat(registerLatitude),
-        lng: parseFloat(registerLongitude),
-      });
-    }
+    map.panTo({
+      lat: parseFloat(registerLatitude),
+      lng: parseFloat(registerLongitude),
+    });
 
     clearRegisters();
   };
@@ -157,12 +183,13 @@ const MapListeners = ({
     }
   };
 
-  return registering && (
+  return (editing || registering) && (
     <RegisterBox
       latitude={registerLatitude}
       longitude={registerLongitude}
       description={registerDescription}
       accessibility={registerAccessibility}
+      editing={editing}
       onCancel={onRegisterBoxCancel}
       onDescriptionChanged={onRegisterDescriptionChanged}
       onAccessibilityChanged={onRegisterAccessibilityChanged}
@@ -180,13 +207,16 @@ MapListeners.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
   })).isRequired,
+  editing: PropTypes.string,
   onCancelRegister: PropTypes.func.isRequired,
   onConfirmRegister: PropTypes.func.isRequired,
+  onEditClick: PropTypes.func.isRequired,
   registering: PropTypes.bool,
   submittingRegister: PropTypes.bool,
 };
 
 MapListeners.defaultProps = {
+  editing: null,
   registering: false,
   submittingRegister: false,
 };

@@ -13,6 +13,7 @@ const RegisterBox = ({
   longitude,
   description,
   accessibility,
+  editing,
   onCancel,
   onConfirm,
   onDescriptionChanged,
@@ -48,7 +49,13 @@ const RegisterBox = ({
     <div className={styles.Wrapper}>
       <div className={styles.Container}>
         <div className={styles.Header}>
-          <h4 className={styles.Title}>Selecione no mapa o novo local de acessibilidade</h4>
+          <h4 className={styles.Title}>
+            {
+              (!latitude || !longitude) && !editing
+                ? 'Selecione no mapa o novo indicativo'
+                : 'Arraste o ícone até o local desejado'
+            }
+          </h4>
           <button
             type="button"
             disabled={submitting}
@@ -98,7 +105,7 @@ const RegisterBox = ({
           disabled={submitting || !latitude || !longitude}
           submitting={submitting}
         >
-          Cadastrar
+          {editing ? 'Salvar' : 'Cadastrar'}
         </Button>
       </div>
     </div>
@@ -110,6 +117,7 @@ RegisterBox.propTypes = {
   longitude: PropTypes.string,
   description: PropTypes.string,
   accessibility: PropTypes.string,
+  editing: PropTypes.string,
   onCancel: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   onDescriptionChanged: PropTypes.func.isRequired,
@@ -124,6 +132,7 @@ RegisterBox.defaultProps = {
   longitude: '',
   description: '',
   accessibility: '',
+  editing: '',
   searchError: false,
   submitting: false,
 };

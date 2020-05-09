@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { useAccessibilities } from '../AccessibilitiesContext';
 import MapListeners from '../MapListeners';
 import Menu from '../Menu';
-import { createMarker } from '../../services/markers';
+import { createMarker, editMarker } from '../../services/markers';
 import redirect from '../../utils/router';
 
 const MapComponents = () => {
   const [sidebarActive, setSidebarActive] = useState(false);
   const [registering, setRegistering] = useState(false);
+  const [editing, setEditing] = useState(null);
   const [submittingRegister, setSubmittingRegister] = useState(false);
   const accessibilities = useAccessibilities();
   const [
@@ -41,6 +42,7 @@ const MapComponents = () => {
 
   const onCancelRegister = () => {
     setRegistering(false);
+    setEditing(null);
   };
 
   const onConfirmRegister = async ({
@@ -51,26 +53,43 @@ const MapComponents = () => {
   }) => {
     setSubmittingRegister(true);
 
-    await createMarker({
-      lat: latitude,
-      lng: longitude,
-      description,
-      accessibilityId: accessibility,
-    });
+    if (registering) {
+      await createMarker({
+        accessibilityId: accessibility,
+        description,
+        lat: latitude,
+        lng: longitude,
+      });
+
+      setRegistering(false);
+    } else if (editing) {
+      await editMarker({
+        accessibilityId: accessibility,
+        description,
+        id: editing,
+        lat: latitude,
+        lng: longitude,
+      });
+
+      setEditing(null);
+    }
 
     setSubmittingRegister(false);
-    setRegistering(false);
+  };
 
-    return true;
+  const onEditClick = ({ id }) => {
+    setEditing(id.toString());
   };
 
   return (
     <>
       <MapListeners
         accessibilitiesFilter={accessibilitiesFilter}
-        registering={registering}
+        editing={editing}
         onCancelRegister={onCancelRegister}
         onConfirmRegister={onConfirmRegister}
+        onEditClick={onEditClick}
+        registering={registering}
         submittingRegister={submittingRegister}
       />
       <Menu
