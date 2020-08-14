@@ -45,6 +45,10 @@
   justify-content: flex-end;
 }
 
+.Backward {
+  align-items: center;
+}
+
 .Widget {
   border-top: 1px solid #d9d9d9;
   font-size: 13px;
