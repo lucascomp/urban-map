@@ -26,6 +26,7 @@ const handle = app.getRequestHandler();
   }
 
   server
+    .get('/', handle)
     .get('/forgot-password', handle)
     .get('/home', handle)
     .get('/login', handle)
