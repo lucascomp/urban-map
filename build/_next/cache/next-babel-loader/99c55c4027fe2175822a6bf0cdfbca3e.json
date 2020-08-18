@@ -1,1 +1,0 @@
-{"ast":null,"code":"export { default } from './Panel';","map":{"version":3,"sources":["/home/lucas/dev/uerj/urban-map-site/src/components/Panel/index.js"],"names":["default"],"mappings":"AAAA,SAASA,OAAT,QAAwB,SAAxB","sourcesContent":["export { default } from './Panel';\n"]},"metadata":{},"sourceType":"module"}
