@@ -1,0 +1,1 @@
+{"ast":null,"code":"export { default } from './Spinner';","map":{"version":3,"sources":["/home/lucas/dev/uerj/urban-map-site/src/components/Spinner/index.js"],"names":["default"],"mappings":"AAAA,SAASA,OAAT,QAAwB,WAAxB","sourcesContent":["export { default } from './Spinner';\n"]},"metadata":{},"sourceType":"module"}

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export { default } from './GoogleLoginButton';","map":{"version":3,"sources":["/home/lucas/dev/uerj/urban-map-site/src/components/GoogleLoginButton/index.js"],"names":["default"],"mappings":"AAAA,SAASA,OAAT,QAAwB,qBAAxB","sourcesContent":["export { default } from './GoogleLoginButton';\n"]},"metadata":{},"sourceType":"module"}

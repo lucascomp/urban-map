@@ -1,0 +1,17 @@
+{
+  "name": "Mapa de Acessibilidade Urbana",
+  "short_name": "Urban map",
+  "icons": [
+    {
+      "src": "/static/handicap.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "background_color": "#FFFFFF",
+  "description": "Site do Mapa de Acessibilidade Urbana",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/",
+  "theme_color": "#FFFFFF"
+}
