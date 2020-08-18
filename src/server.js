@@ -19,7 +19,7 @@ const handle = app.getRequestHandler();
   server
     .use(compression())
     .use(cookieParser())
-    .use(express.static(`${__dirname}/public`));
+    .use(express.static('public'));
 
   if (dev) {
     server.get('/_next/*', handle);
