@@ -8,6 +8,7 @@
     "dev": "node ./src/server.js",
     "build": "next build src",
     "prestart": "npm run build",
+    "heroku-postbuild": "npm run build",
     "start": "node ./src/server.js",
     "lint": "eslint --cache 'src/**/*.{js,jsx}'"
   },
