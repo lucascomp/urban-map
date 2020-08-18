@@ -8,7 +8,7 @@
     "dev": "next",
     "build": "next build",
     "prestart": "npm run build",
-    "start": "next start",
+    "start": "next start -p 80",
     "lint": "eslint --cache 'src/**/*.{js,jsx}'"
   },
   "author": "Lucas Alves de Sousa <lucas_comp@outlook.com>",
