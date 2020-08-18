@@ -7,5 +7,5 @@ export default AccessibilitiesContext;
 export const useAccessibilities = () => {
   const accessibilites = useContext(AccessibilitiesContext);
 
-  return accessibilites;
+  return accessibilites || [];
 };
