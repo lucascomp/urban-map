@@ -21,11 +21,8 @@ const handle = app.getRequestHandler();
     .use(cookieParser())
     .use(express.static('public'));
 
-  if (dev) {
-    server.get('/_next/*', handle);
-  }
-
   server
+    .get('/_next/*', handle)
     .get('/', handle)
     .get('/forgot-password', handle)
     .get('/home', handle)
