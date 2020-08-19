@@ -26,7 +26,7 @@ class UrbanMapDocument extends Document {
       <Html>
         <Head>
           <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
-          <link rel="icon" href="/static/favicon.ico" />
+          <link rel="icon" href="/favicon.ico" />
           <meta name="theme-color" content="#72B340" />
           <meta
             name="description"
