@@ -1,36 +1,69 @@
 require('dotenv').config();
 
-const { promisify } = require('util');
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const nextApp = require('next');
+const Koa = require('koa');
+const Router = require('koa-router');
+const koaConnect = require('koa-connect');
+const serve = require('koa-static');
 const compression = require('compression');
+const next = require('next');
 const nextConfig = require('../next.config');
 
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV !== 'production';
 
-const app = nextApp({ ...nextConfig, dev });
-const handle = app.getRequestHandler();
+const nextApp = next({ ...nextConfig, dev });
+const handle = nextApp.getRequestHandler();
+
+const server = new Koa();
+const router = new Router();
+
+server.use(koaConnect(compression()));
+server.use(serve('public'));
 
 (async () => {
-  const server = express();
+  await nextApp.prepare();
 
-  server
-    .use(compression())
-    .use(cookieParser())
-    .use(express.static('public'));
+  router.get('/', async (ctx) => {
+    await nextApp.render(ctx.req, ctx.res, '/', ctx.query);
+    ctx.respond = false;
+  });
 
-  server
-    .get('/_next/*', handle)
-    .get('/', handle)
-    .get('/forgot-password', handle)
-    .get('/home', handle)
-    .get('/login', handle)
-    .get('/register-admin', handle)
-    .get('/reset-password', handle)
-    .get('/signup', handle);
+  router.get('/forgot-password', async (ctx) => {
+    await nextApp.render(ctx.req, ctx.res, '/forgot-password', ctx.query);
+    ctx.respond = false;
+  });
 
-  await app.prepare();
-  await promisify(server.listen.bind(server))(PORT);
+  router.get('/home', async (ctx) => {
+    await nextApp.render(ctx.req, ctx.res, '/home', ctx.query);
+    ctx.respond = false;
+  });
+
+  router.get('/login', async (ctx) => {
+    await nextApp.render(ctx.req, ctx.res, '/login', ctx.query);
+    ctx.respond = false;
+  });
+
+  router.get('/register-admin', async (ctx) => {
+    await nextApp.render(ctx.req, ctx.res, '/register-admin', ctx.query);
+    ctx.respond = false;
+  });
+
+  router.get('/reset-password', async (ctx) => {
+    await nextApp.render(ctx.req, ctx.res, '/reset-password', ctx.query);
+    ctx.respond = false;
+  });
+
+  router.get('/signup', async (ctx) => {
+    await nextApp.render(ctx.req, ctx.res, '/signup', ctx.query);
+    ctx.respond = false;
+  });
+
+  router.all('(.*)', async (ctx) => {
+    await handle(ctx.req, ctx.res);
+    ctx.respond = false;
+  });
+
+  server.use(router.routes());
+  // eslint-disable-next-line no-console
+  server.listen(PORT, console.log('> Ready!'));
 })();

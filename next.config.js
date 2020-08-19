@@ -11,6 +11,7 @@ const prod = NODE_ENV === 'production';
 
 const nextConfig = {
   dir: './src',
+  distDir: '../.next',
   generateBuildId: () => Promise.resolve(version),
   webpack: ({ plugins, ...rest }) => {
     const dotenv = new Dotenv({
