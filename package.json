@@ -5,9 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node ./src/server.js",
+    "dev": "NODE_ENV=development node ./src/server.js",
     "build": "next build src",
-    "start": "node ./src/server.js",
+    "start": " yarn build && NODE_ENV=production node ./src/server.js",
     "lint": "eslint --cache 'src/**/*.{js,jsx}'"
   },
   "author": "Lucas Alves de Sousa <lucas_comp@outlook.com>",
