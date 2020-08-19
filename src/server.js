@@ -3,7 +3,7 @@ require('dotenv').config();
 const Koa = require('koa');
 const Router = require('koa-router');
 const koaConnect = require('koa-connect');
-const serve = require('koa-static');
+const koaStatic = require('koa-static');
 const compression = require('compression');
 const next = require('next');
 const nextConfig = require('../next.config');
@@ -18,7 +18,7 @@ const server = new Koa();
 const router = new Router();
 
 server.use(koaConnect(compression()));
-server.use(serve('public'));
+server.use(koaStatic('public'));
 
 (async () => {
   await nextApp.prepare();
