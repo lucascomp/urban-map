@@ -1,11 +1,11 @@
 import fetch from 'isomorphic-fetch';
 
-const { URBAN_MAP_BASE_URL, PORT } = process.env;
+const { URBAN_MAP_BASE_URL } = process.env;
 
 const fetchWrapper = async (path, config) => {
   const request = async () => {
     try {
-      return await fetch(`${URBAN_MAP_BASE_URL}:${PORT}${path}`, config);
+      return await fetch(`${URBAN_MAP_BASE_URL}${path}`, config);
     } catch (error) {
       throw new Error('Não foi possível se conectar ao servidor');
     }
