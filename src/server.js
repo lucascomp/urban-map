@@ -36,7 +36,10 @@ const { APP_KEYS, PORT, SESSION_COOKIE } = process.env;
     }))
     .use(session({
       key: SESSION_COOKIE,
-      httpOnly: false,
+      cookie: {
+        signed: false,
+        httpOnly: false,
+      },
     }))
     .use(bodyparser())
     .use(passport.initialize())
