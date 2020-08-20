@@ -37,7 +37,7 @@ export const getMarkers = async (map) => {
   const east = northEast.lng();
   const west = southWest.lng();
 
-  const path = `/markers?north=${north}&south=${south}&east=${east}&west=${west}`;
+  const path = `/api/markers?north=${north}&south=${south}&east=${east}&west=${west}`;
 
   const response = await get(path);
 
@@ -50,7 +50,7 @@ export const createMarker = ({
   description,
   userId,
   accessibilityId,
-}) => put('/markers', {
+}) => put('/api/markers', {
   lat,
   lng,
   description,
@@ -65,7 +65,7 @@ export const editMarker = ({
   description,
   userId,
   accessibilityId,
-}) => post('/markers', {
+}) => post('/api/markers', {
   id,
   lat,
   lng,

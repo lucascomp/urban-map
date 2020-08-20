@@ -1,0 +1,12 @@
+{
+  "watch": [
+    "src/config",
+    "src/controllers",
+    "src/middlewares",
+    "src/models",
+    "src/utils/crypto.js",
+    "src/auth.js",
+    "src/router.js",
+    "src/server.js"
+  ]
+}

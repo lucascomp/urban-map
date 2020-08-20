@@ -1,69 +1,52 @@
 require('dotenv').config();
+require('./auth');
 
 const Koa = require('koa');
-const Router = require('koa-router');
+const cors = require('kcors');
+const logger = require('koa-logger');
+const bodyparser = require('koa-bodyparser');
 const koaConnect = require('koa-connect');
 const koaStatic = require('koa-static');
+const session = require('koa-generic-session');
+const passport = require('koa-passport');
 const compression = require('compression');
-const next = require('next');
-const nextConfig = require('../next.config');
+const { errorHandler } = require('./middlewares/errorHandler');
+const routerFactory = require('./router');
 
-const { PORT, NODE_ENV } = process.env;
-const dev = NODE_ENV !== 'production';
-
-const nextApp = next({ ...nextConfig, dev });
-const handle = nextApp.getRequestHandler();
-
-const server = new Koa();
-const router = new Router();
-
-server.use(koaConnect(compression()));
-server.use(koaStatic('public'));
+const { APP_KEYS, PORT, SESSION_COOKIE } = process.env;
 
 (async () => {
-  await nextApp.prepare();
+  const server = new Koa();
+  const router = await routerFactory();
 
-  router.get('/', async (ctx) => {
-    await nextApp.render(ctx.req, ctx.res, '/', ctx.query);
-    ctx.respond = false;
-  });
+  server.proxy = true;
+  server.keys = APP_KEYS.split(',');
 
-  router.get('/forgot-password', async (ctx) => {
-    await nextApp.render(ctx.req, ctx.res, '/forgot-password', ctx.query);
-    ctx.respond = false;
-  });
+  if (server.env === 'development') {
+    server.use(logger());
+  }
 
-  router.get('/home', async (ctx) => {
-    await nextApp.render(ctx.req, ctx.res, '/home', ctx.query);
-    ctx.respond = false;
-  });
+  server
+    .use(errorHandler)
+    .use(koaConnect(compression()))
+    .use(koaStatic('public'))
+    .use(cors({
+      allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'OPTIONS'],
+      credentials: true,
+    }))
+    .use(session({
+      key: SESSION_COOKIE,
+      httpOnly: false,
+    }))
+    .use(bodyparser())
+    .use(passport.initialize())
+    .use(passport.session())
+    .use(async (ctx, next) => {
+      ctx.res.statusCode = 200;
+      await next();
+    })
+    .use(router.routes());
 
-  router.get('/login', async (ctx) => {
-    await nextApp.render(ctx.req, ctx.res, '/login', ctx.query);
-    ctx.respond = false;
-  });
-
-  router.get('/register-admin', async (ctx) => {
-    await nextApp.render(ctx.req, ctx.res, '/register-admin', ctx.query);
-    ctx.respond = false;
-  });
-
-  router.get('/reset-password', async (ctx) => {
-    await nextApp.render(ctx.req, ctx.res, '/reset-password', ctx.query);
-    ctx.respond = false;
-  });
-
-  router.get('/signup', async (ctx) => {
-    await nextApp.render(ctx.req, ctx.res, '/signup', ctx.query);
-    ctx.respond = false;
-  });
-
-  router.all('(.*)', async (ctx) => {
-    await handle(ctx.req, ctx.res);
-    ctx.respond = false;
-  });
-
-  server.use(router.routes());
   // eslint-disable-next-line no-console
   server.listen(PORT, console.log('> Ready!'));
 })();

@@ -1,15 +1,11 @@
 import fetch from 'isomorphic-fetch';
 
-const { SERVICE_URBAN_MAP_API_BASE_URL } = process.env;
-
-const credentials = 'include';
+const { URBAN_MAP_API_BASE_URL } = process.env;
 
 const fetchWrapper = async (path, config) => {
   const request = async () => {
     try {
-      const url = `${SERVICE_URBAN_MAP_API_BASE_URL}${path}`;
-
-      return await fetch(url, config);
+      return await fetch(`${URBAN_MAP_API_BASE_URL}${path}`, config);
     } catch (error) {
       throw new Error('Não foi possível se conectar ao servidor');
     }
@@ -29,7 +25,7 @@ const fetchWrapper = async (path, config) => {
 const requestWithBody = async (method, path, body, headers) => {
   const config = {
     body: JSON.stringify(body),
-    credentials,
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
       ...headers,
@@ -42,7 +38,7 @@ const requestWithBody = async (method, path, body, headers) => {
 
 export const get = async (path, headers) => {
   const config = {
-    credentials,
+    credentials: 'include',
     method: 'GET',
     headers,
   };

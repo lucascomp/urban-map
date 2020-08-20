@@ -1,29 +1,28 @@
 import { forceClearSession } from '../utils/auth';
 import { get, post, put } from '../utils/request';
-import redirect from '../utils/router';
 
-const { SERVICE_URBAN_MAP_API_BASE_URL } = process.env;
+/* global window */
 
 export const forgotPassword = ({ email }) => {
-  const path = '/forgot-password';
+  const path = '/api/forgot-password';
 
   return post(path, { email });
 };
 
 export const getUser = async ({ cookie } = {}) => {
-  const response = await get('/user', { cookie });
+  const response = await get('/api/user', { cookie });
 
   return response.json();
 };
 
 export const login = ({ email, password }) => {
-  const path = '/login';
+  const path = '/api/login';
 
   return post(path, { email, password });
 };
 
 const loginWithProvider = ({ provider }) => {
-  redirect(`${SERVICE_URBAN_MAP_API_BASE_URL}/login/${provider}`);
+  window.location = `/api/login/${provider}`;
 };
 
 export const loginWithFacebook = () => {
@@ -39,7 +38,7 @@ export const loginWithGoogle = () => {
 };
 
 export const logout = async ({ cookie } = {}) => {
-  const path = '/logout';
+  const path = '/api/logout';
 
   try {
     const res = await get(path, { cookie });
@@ -58,7 +57,7 @@ export const registerAdmin = ({
   firstName,
   lastName,
   password,
-}) => post('/register-admin', {
+}) => post('/api/register-admin', {
   email,
   firstName,
   lastName,
@@ -66,7 +65,7 @@ export const registerAdmin = ({
 });
 
 export const resetPassword = ({ token, password }) => {
-  const path = '/reset-password';
+  const path = '/api/reset-password';
 
   return post(path, {
     token,
@@ -80,7 +79,7 @@ export const signup = ({
   email,
   password,
 }) => {
-  const path = '/signup';
+  const path = '/api/signup';
 
   return put(path, {
     firstName,
