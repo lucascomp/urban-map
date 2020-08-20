@@ -8,6 +8,9 @@ export const getAuth = (ctx) => {
   const cookies = nextCookies(ctx);
   const token = cookies[SESSION_COOKIE];
 
+  console.log('SESSION_COOKIE', SESSION_COOKIE);
+  console.log('token', token);
+
   return {
     isLoggedIn: !!token,
   };
