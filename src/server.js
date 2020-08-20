@@ -36,6 +36,8 @@ const { APP_KEYS, PORT, SESSION_COOKIE } = process.env;
     }))
     .use(session({
       key: SESSION_COOKIE,
+      resave: false,
+      saveUninitialized: true,
       cookie: {
         signed: false,
         httpOnly: false,
