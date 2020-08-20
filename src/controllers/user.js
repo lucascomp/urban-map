@@ -5,7 +5,7 @@ const transporter = require('../config/transporter');
 const { ResetToken, User } = require('../models');
 const { generateSalt, sha512 } = require('../utils/crypto');
 
-const { EMAIL_USER, URBAN_MAP_SITE_BASE_URL } = process.env;
+const { EMAIL_USER, URBAN_MAP_BASE_URL } = process.env;
 
 const forgotPassword = async (ctx) => {
   const { email } = ctx.request.body;
@@ -41,7 +41,7 @@ const forgotPassword = async (ctx) => {
       from: `Mapa de Acessibilidade Urbana <${EMAIL_USER}>`,
       to: email,
       subject: 'Redefinir senha',
-      text: `Olá, ${firstName}! Recupere sua senha. É muito simples! Clique no link a seguir e defina uma nova senha: ${URBAN_MAP_SITE_BASE_URL}/reset-password?token=${token} `,
+      text: `Olá, ${firstName}! Recupere sua senha. É muito simples! Clique no link a seguir e defina uma nova senha: ${URBAN_MAP_BASE_URL}/reset-password?token=${token} `,
     });
   } catch (error) {
     ctx.throw(500, 'Não foi possível enviar o e-mail de redefinição de senha');
@@ -87,8 +87,8 @@ const loginWithGoogle = (ctx) => passport.authenticate('google', {
 })(ctx);
 
 const loginCallback = (strategy) => (ctx) => passport.authenticate(strategy, {
-  successRedirect: `${URBAN_MAP_SITE_BASE_URL}/home`,
-  failureRedirect: `${URBAN_MAP_SITE_BASE_URL}/login`,
+  successRedirect: `${URBAN_MAP_BASE_URL}/home`,
+  failureRedirect: `${URBAN_MAP_BASE_URL}/login`,
 })(ctx);
 
 const logout = async (ctx) => {

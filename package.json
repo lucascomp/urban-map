@@ -1,5 +1,5 @@
 {
-  "name": "urban-map-site",
+  "name": "urban-map",
   "version": "0.0.1",
   "description": "Site do Mapa de Acessibilidade Urbana",
   "main": "server.js",
@@ -21,13 +21,13 @@
   },
   "author": "Lucas Alves de Sousa <lucas_comp@outlook.com>",
   "license": "UNLICENSED",
-  "homepage": "https://github.com/lucascomp/urban-map-site#readme",
+  "homepage": "https://github.com/lucascomp/urban-map#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lucascomp/urban-map-site.git"
+    "url": "git+https://github.com/lucascomp/urban-map.git"
   },
   "bugs": {
-    "url": "https://github.com/lucascomp/urban-map-site/issues"
+    "url": "https://github.com/lucascomp/urban-map/issues"
   },
   "dependencies": {
     "@react-google-maps/api": "^1.7.6",
