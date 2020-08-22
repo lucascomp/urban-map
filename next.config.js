@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const withImages = require('next-images');
 const withCss = require('@zeit/next-css');
+const withPwa = require('next-pwa');
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
 const { version } = require('./package.json');
@@ -32,6 +33,9 @@ const nextConfig = {
     url: false,
     localIdentName: prod ? 'ums-[hash:base64:5]' : '[name]_[local]-[hash:base64:5]',
   },
+  pwa: {
+    dest: 'public',
+  },
 };
 
-module.exports = withImages(withCss(nextConfig));
+module.exports = withImages(withCss(withPwa(nextConfig)));
