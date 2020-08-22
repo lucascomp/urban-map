@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "NODE_ENV=development nodemon ./src/server.js",
     "build": "next build src",
-    "prestart": "yarn migration:up && yarn build",
+    "prestart": "yarn migration:up && yarn migration:seed && yarn build",
     "start": "NODE_ENV=production node ./src/server.js",
     "lint": "eslint --cache 'src/**/*.{js,jsx}'",
     "migration": "node -r dotenv/config ./node_modules/.bin/sequelize",
