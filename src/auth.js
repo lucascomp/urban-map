@@ -65,21 +65,39 @@ passport.use(new LocalStrategy(
 ));
 
 const findOrCreateProviderUser = async (provider, profile, done) => {
+  const {
+    id: providerId,
+    emails: [{ value: email }],
+  } = profile;
+
+  const providerIdKey = `${provider}Id`;
+
   try {
-    const [user] = await User.findOrCreate({
+    const existingUser = await User.findOne({
       attributes: ['id'],
-      defaults: {
-        email: profile.emails[0].value,
-        firstName: profile.name.givenName,
-        lastName: profile.name.familyName,
-      },
-      raw: true,
-      where: {
-        [`${provider}Id`]: profile.id,
-      },
+      where: { email },
     });
 
-    return done(null, user);
+    if (existingUser) {
+      existingUser[providerIdKey] = providerId;
+
+      await existingUser.save();
+
+      return done(null, existingUser);
+    }
+
+    const {
+      name: { givenName, familyName },
+    } = profile;
+
+    const [newUser] = await User.create({
+      email,
+      firstName: givenName,
+      lastName: familyName,
+      [providerIdKey]: providerId,
+    });
+
+    return done(null, newUser);
   } catch (error) {
     return done(error);
   }
