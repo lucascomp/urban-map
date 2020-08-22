@@ -1,9 +1,9 @@
 import { get, post, put } from '../utils/request';
-import BeepIcon from '../../public/resources/icons/beep.svg';
-import BrailleIcon from '../../public/resources/icons/braille.svg';
-import LowVisionAccessIcon from '../../public/resources/icons/low-vision-access.svg';
-import SignLanguageIcon from '../../public/resources/icons/sign-language.svg';
-import WheelchairIcon from '../../public/resources/icons/wheelchair.svg';
+import BeepIcon from '../../public/icons/beep.svg';
+import BrailleIcon from '../../public/icons/braille.svg';
+import LowVisionAccessIcon from '../../public/icons/low-vision-access.svg';
+import SignLanguageIcon from '../../public/icons/sign-language.svg';
+import WheelchairIcon from '../../public/icons/wheelchair.svg';
 
 /* global google */
 
